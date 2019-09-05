@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\SfUser;
+use App\Manager\UserManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class NoAuthAPIController extends AbstractController
 {
-
     /**
      * @Route(
      *     "/create-user",
@@ -28,9 +28,11 @@ class NoAuthAPIController extends AbstractController
      * )
      *
      * @param Request $request
+     * @param UserManager $userManager
+     * @return Response
      * @throws \Exception
      */
-    public function createUser (Request $request, UserPasswordEncoderInterface $encoder)
+    public function createUser (Request $request, UserManager $userManager)
     {
         if (!empty($this->getUser())) {
             throw new \Exception('Can not create users while logged in');
@@ -38,25 +40,11 @@ class NoAuthAPIController extends AbstractController
 
         $content = json_decode($request->getContent(), true);
 
-        $user = new SfUser();
-        $user->setEmail($content['email']);
-        $user->setUsername($content['username']);
-        $user->setPassword($encoder->encodePassword($user, $content['plaintext_password']));
-        $user->setRoles(['ROLE_USER']);
-        $user->setValidated(false);
+        $userManager->createUser($content['email'], $content['username'], $content['plaintext_password']);
 
-        $this->getObjectManager()->persist($user);
-        $this->getObjectManager()->flush();
-
-        $response = new Response();
+        return new Response();
     }
 
 
-    /**
-     * @return ObjectManager
-     */
-    protected function getObjectManager ()
-    {
-        return $this->getDoctrine()->getManager();
-    }
+
 }
