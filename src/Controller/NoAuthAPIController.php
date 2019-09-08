@@ -60,11 +60,8 @@ class NoAuthAPIController extends AbstractController
 
         $context = new SerializationContext();
         $context->setGroups(['signupresponse']);
-        $context->setSerializeNull(true);
 
-        dd ($serializer->serialize($user, 'json', $context));
-
-        return new JsonResponse($serializer->serialize($user, 'json'), 200, ['groups' => ['signupresponse']], true);
+        return new JsonResponse($serializer->serialize($user, 'json', $context), 200, [], true);
     }
 
     public function loginCheckAction (Request $request, UserManager $userManager)

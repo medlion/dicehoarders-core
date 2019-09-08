@@ -49,9 +49,10 @@ class UserManager
         $user->setPassword($this->userPasswordEncoderInterface->encodePassword($user, $plaintextPassword));
         $user->setRoles(['ROLE_USER']);
         $user->setValidatedAt(null);
+        $user->setToken($this->JWTTokenManagerInterface->create($user));
 
         $this->getObjectManager()->persist($user);
-        //$this->getObjectManager()->flush();
+        $this->getObjectManager()->flush();
 
         return $user;
     }

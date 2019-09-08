@@ -71,6 +71,11 @@ class SfUser implements UserInterface
      */
     private $updated_at;
 
+    /**
+     * @var string
+     */
+    private $token;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -237,5 +242,14 @@ class SfUser implements UserInterface
      */
     public function getToken ()
     {
+        return $this->token;
+    }
+
+    /**
+     * @param $token
+     */
+    public function setToken ($token)
+    {
+        $this->token = $token;
     }
 }
