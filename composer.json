@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "^1.7",
+        "friendsofsymfony/rest-bundle": "^2.5",
         "jms/serializer-bundle": "^3.4",
         "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/api-doc-bundle": "^3.4",

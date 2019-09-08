@@ -5,6 +5,7 @@ namespace App\Manager;
 
 
 use App\Entity\SfUser;
+use App\ExceptionHandling\UserFriendlyException;
 use Doctrine\Common\Persistence\ObjectManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -41,6 +42,18 @@ class UserManager
      */
     public function createUser ($email, $username, $plaintextPassword)
     {
+        if (! $this->isValidEmail($email)) {
+            throw new UserFriendlyException('Email address is invalid');
+        }
+
+        if (! $this->isValidUsername($username)) {
+            throw new UserFriendlyException('Username is invalid');
+        }
+
+        if (! $this->getDetailsAvailability($username, $email)) {
+            throw new UserFriendlyException('Accounts exists with supplied credentials');
+        }
+
         $user = new SfUser();
         $user->setEmail($email);
         if ($this->isValidUsername($username)) {
@@ -78,7 +91,7 @@ class UserManager
     {
         if ($this->isValidUsername($loginKey)) {
             $user = $this->getObjectManager()->getRepository(SfUser::class)->findOneBy(['username' => $loginKey]);
-        } elseif (true) {
+        } elseif ($this->is) {
             $user = $this->getObjectManager()->getRepository(SfUser::class)->findOneBy([ 'email' => $loginKey]);
         }
 
@@ -95,13 +108,19 @@ class UserManager
 
 
     /**
-     * @return ObjectManager
+     * @param string $username
+     * @param string $email
+     * @return bool
      */
-    protected function getObjectManager ()
+    public function getDetailsAvailability ($username, $email)
     {
-        return $this->objectManager;
+        return true;
     }
 
+    /**
+     * @param string $username
+     * @return bool
+     */
     protected function isValidUsername ($username)
     {
         if (!ctype_alnum($username))
@@ -110,5 +129,24 @@ class UserManager
         }
 
         return true;
+    }
+
+    /**
+     * @param string $email
+     * @return bool
+     */
+    protected function isValidEmail ($email)
+    {
+        return true;
+    }
+
+
+
+    /**
+     * @return ObjectManager
+     */
+    protected function getObjectManager ()
+    {
+        return $this->objectManager;
     }
 }

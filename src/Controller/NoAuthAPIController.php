@@ -4,13 +4,11 @@
 namespace App\Controller;
 
 
+use App\Manager\UserAPIManager;
 use App\Manager\UserManager;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,20 +33,22 @@ class NoAuthAPIController extends AbstractController
      *     in="body",
      *     @SWG\Schema(ref=@Model(type=SfUser::Class, groups={"signuprequirement"}))
      * )
+     *
      * @SWG\Response(
      *     response="200",
-     *     description="Returns the created user",
+     *     description="User created successfully",
      *     @Model(type=SfUser::Class, groups={"signupresponse"})
      * )
+     *
      * @SWG\Tag(name="User")
      *
      * @param Request $request
      * @param UserManager $userManager
-     * @param SerializerInterface $serializer
+     * @param UserAPIManager $userAPIManager
      * @return Response
      * @throws \Exception
      */
-    public function createUserAction (Request $request, UserManager $userManager, SerializerInterface $serializer)
+    public function createUserAction (Request $request, UserManager $userManager, UserAPIManager $userAPIManager)
     {
         if (!empty($this->getUser())) {
             throw new \Exception('Can not create users while logged in');
@@ -58,10 +58,7 @@ class NoAuthAPIController extends AbstractController
 
         $user = $userManager->createUser($content['email'], $content['username'], $content['plaintext_password']);
 
-        $context = new SerializationContext();
-        $context->setGroups(['signupresponse']);
-
-        return new JsonResponse($serializer->serialize($user, 'json', $context), 200, [], true);
+        return $userAPIManager->userSuccessfullyCreatedResponse($user);
     }
 
     public function loginCheckAction (Request $request, UserManager $userManager)
