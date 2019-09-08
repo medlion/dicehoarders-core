@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Manager\UserManager;
 
 /**
  * @ORM\Table("sf_user")
  * @ORM\Entity(repositoryClass="App\Repository\SfUserRepository")
+ * @Serializer\ExclusionPolicy("All")
+ * @Serializer\AccessorOrder("alphabetical")
  */
 class SfUser implements UserInterface
 {
@@ -21,22 +26,30 @@ class SfUser implements UserInterface
     /**
      * @var string
      * @ORM\Column(name="email", type="string", length=180, unique=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"signuprequirement", "signupresponse"})
      */
     private $email;
 
     /**
-     * @var bool
-     * @ORM\Column(name="validated", type="boolean")
+     * @var \DateTime
+     * @ORM\Column(name="validated", type="datetime")
+     * @Serializer\Expose
+     * @Serializer\Groups({"signupresponse"})
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
-    private $validated;
+    private $validatedAt;
 
     /**
      * @ORM\Column(name="username", type="string", length=180, unique=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"signuprequirement", "signupresponse"})
      */
     private $username;
 
     /**
      * @ORM\Column(name="roles", type="json")
+     * @var string[]
      */
     private $roles = [];
 
@@ -45,6 +58,18 @@ class SfUser implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updated_at;
 
     public function getId(): ?int
     {
@@ -68,19 +93,19 @@ class SfUser implements UserInterface
     }
 
     /**
-     * @return bool
+     * @return \DateTime
      */
-    public function isValidated(): bool
+    public function getValidatedAt(): \DateTime
     {
-        return $this->validated;
+        return $this->validatedAt;
     }
 
     /**
-     * @param bool $validated
+     * @param \DateTime|null $validatedAt
      */
-    public function setValidated(bool $validated): void
+    public function setValidatedAt($validatedAt): void
     {
-        $this->validated = $validated;
+        $this->validatedAt = $validatedAt;
     }
 
     /**
@@ -135,12 +160,38 @@ class SfUser implements UserInterface
     }
 
     /**
-     * @see UserInterface
+     * @return \DateTime
      */
-    public function getSalt()
+    public function getCreatedAt(): \DateTime
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        return $this->created_at;
     }
+
+    /**
+     * @param \DateTime $created_at
+     */
+    public function setCreatedAt(\DateTime $created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param \DateTime $updated_at
+     */
+    public function setUpdatedAt(\DateTime $updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
+
+
 
     /**
      * @see UserInterface
@@ -149,5 +200,42 @@ class SfUser implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("plaintext_password")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"signuprequirement"})
+     * @Serializer\Type("string")
+     * @param string $plaintextPassword
+     */
+    public function setPlaintextPlassword ()
+    {
+    }
+
+    /**
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("token")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"signupresponse"})
+     * @Serializer\Type("string")
+     *
+     * @return string
+     */
+    public function getToken ()
+    {
     }
 }
