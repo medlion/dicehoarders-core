@@ -26,10 +26,10 @@ class UserAPIManager
      * @param SfUser $user
      * @return JsonResponse
      */
-    public function userSuccessfullyCreatedResponse (SfUser $user)
+    public function userLoggedInResponse (SfUser $user)
     {
         $context = new SerializationContext();
-        $context->setGroups(['signupresponse']);
+        $context->setGroups(['login']);
 
         return new JsonResponse($this->serializer->serialize($user, 'json', $context), 200, [], true);
     }

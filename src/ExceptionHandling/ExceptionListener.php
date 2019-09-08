@@ -22,6 +22,6 @@ class ExceptionListener
 
         $code = 400;
 
-        $exceptionEvent->setResponse(new JsonResponse(['message' => $message]), $code);
+        $exceptionEvent->setResponse(new JsonResponse(['code' => $code, 'message' => $message]), $code);
     }
 }

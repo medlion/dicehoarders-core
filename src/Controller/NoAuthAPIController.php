@@ -4,8 +4,10 @@
 namespace App\Controller;
 
 
+use App\ExceptionHandling\UserFriendlyException;
 use App\Manager\UserAPIManager;
 use App\Manager\UserManager;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +39,7 @@ class NoAuthAPIController extends AbstractController
      * @SWG\Response(
      *     response="200",
      *     description="User created successfully",
-     *     @Model(type=SfUser::Class, groups={"signupresponse"})
+     *     @Model(type=SfUser::Class, groups={"loginresponse"})
      * )
      *
      * @SWG\Tag(name="User")
@@ -58,10 +60,37 @@ class NoAuthAPIController extends AbstractController
 
         $user = $userManager->createUser($content['email'], $content['username'], $content['plaintext_password']);
 
-        return $userAPIManager->userSuccessfullyCreatedResponse($user);
+        return $userAPIManager->userLoggedInResponse($user);
     }
 
-    public function loginCheckAction (Request $request, UserManager $userManager)
+    /**
+     * @Rest\Route(
+     *     "/login-check",
+     *     name="post_login_user",
+     *     methods={"POST"},
+     *     format="JSON"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="user",
+     *     in="body",
+     *     @SWG\Schema(ref=@Model(type=SfUser::Class, groups={"signuprequirement"})))
+     * )
+     *
+     * @SWG\Response(
+     *     response="200",
+     *     description="User logged in successfully",
+     *     @Model(type=SfUser::Class, groups={"loginresponse"})
+     * )
+     *
+     * @SWG\Tag(name="User")
+     *
+     * @param Request $request
+     * @param UserManager $userManager
+     * @param UserAPIManager $userAPIManager
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|void\
+     */
+    public function loginCheckAction (Request $request, UserManager $userManager, UserAPIManager $userAPIManager)
     {
         $content = json_decode($request->getContent(), true);
 
@@ -70,10 +99,12 @@ class NoAuthAPIController extends AbstractController
         } elseif (! empty ($content['email'])) {
             $loginKey = $content['email'];
         } else {
-            return;
+            throw new UserFriendlyException('User not found');
         }
 
-        return $userManager->getToken($userManager->authenticateUser($loginKey, $content['plaintext_password']));
+        $user = $userManager->authenticateUser($loginKey, $content['plaintext_password']);
+
+        return $userAPIManager->userLoggedInResponse($user);
     }
 
 

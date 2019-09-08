@@ -89,21 +89,21 @@ class UserManager
      */
     public function authenticateUser ($loginKey, $plaintextPassword)
     {
-        if ($this->isValidUsername($loginKey)) {
+        if (! strpos($loginKey, '@')) {
             $user = $this->getObjectManager()->getRepository(SfUser::class)->findOneBy(['username' => $loginKey]);
-        } elseif ($this->is) {
+        } else {
             $user = $this->getObjectManager()->getRepository(SfUser::class)->findOneBy([ 'email' => $loginKey]);
         }
 
         if (is_null($user)) {
-            return;
+            throw new UserFriendlyException('Login credentials and password do not match');
         }
 
         if ($user->getPassword() === $this->userPasswordEncoderInterface->encodePassword($plaintextPassword)) {
             return $user;
         }
 
-        return;
+        throw new UserFriendlyException('Login credentials and password do not match');
     }
 
 

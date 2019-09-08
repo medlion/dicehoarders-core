@@ -27,7 +27,7 @@ class SfUser implements UserInterface
      * @var string
      * @ORM\Column(name="email", type="string", length=180, unique=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"signuprequirement", "signupresponse"})
+     * @Serializer\Groups({"signuprequirement", "loginresponse"})
      */
     private $email;
 
@@ -35,7 +35,7 @@ class SfUser implements UserInterface
      * @var \DateTime
      * @ORM\Column(name="validated", type="datetime")
      * @Serializer\Expose
-     * @Serializer\Groups({"signupresponse"})
+     * @Serializer\Groups({"loginresponse"})
      * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $validatedAt;
@@ -43,7 +43,7 @@ class SfUser implements UserInterface
     /**
      * @ORM\Column(name="username", type="string", length=180, unique=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"signuprequirement", "signupresponse"})
+     * @Serializer\Groups({"signuprequirement", "loginresponse"})
      */
     private $username;
 
@@ -235,7 +235,7 @@ class SfUser implements UserInterface
      * @Serializer\VirtualProperty()
      * @Serializer\SerializedName("token")
      * @Serializer\Expose()
-     * @Serializer\Groups({"signupresponse"})
+     * @Serializer\Groups({"loginresponse"})
      * @Serializer\Type("string")
      *
      * @return string
