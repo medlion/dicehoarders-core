@@ -4,7 +4,6 @@
 namespace App\Manager\Item;
 
 
-use App\Entity\Item\Item;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

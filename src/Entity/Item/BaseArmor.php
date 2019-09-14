@@ -42,7 +42,6 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="cost_copper", type="integer")
-     * @Serializer\Expose()
      */
     private $costCopper;
 
@@ -113,7 +112,7 @@ class BaseArmor
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -121,7 +120,7 @@ class BaseArmor
     /**
      * @return string
      */
-    public function getClass(): string
+    public function getClass()
     {
         return $this->class;
     }
@@ -129,7 +128,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getCostCopper(): int
+    public function getCostCopper()
     {
         return $this->costCopper;
     }
@@ -137,7 +136,7 @@ class BaseArmor
     /**
      * @return float
      */
-    public function getWeightPounds(): float
+    public function getWeightPounds()
     {
         return $this->weightPounds;
     }
@@ -145,7 +144,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getBaseAC(): int
+    public function getBaseAC()
     {
         return $this->baseAC;
     }
@@ -153,7 +152,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getMaxDexBonus(): int
+    public function getMaxDexBonus()
     {
         return $this->maxDexBonus;
     }
@@ -161,7 +160,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getOtherBonus(): int
+    public function getOtherBonus()
     {
         return $this->otherBonus;
     }
@@ -169,7 +168,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getStrRequirement(): int
+    public function getStrRequirement()
     {
         return $this->strRequirement;
     }
@@ -177,7 +176,7 @@ class BaseArmor
     /**
      * @return bool
      */
-    public function isStealthDisadvantage(): bool
+    public function isStealthDisadvantage()
     {
         return $this->stealthDisadvantage;
     }
@@ -185,7 +184,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getDonTimeTurns(): int
+    public function getDonTimeTurns()
     {
         return $this->donTimeTurns;
     }
@@ -193,7 +192,7 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getDoffTimeTurns(): int
+    public function getDoffTimeTurns()
     {
         return $this->doffTimeTurns;
     }

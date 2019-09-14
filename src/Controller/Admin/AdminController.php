@@ -22,10 +22,7 @@ class AdminController
      */
     public function getAllItemsAction (ItemManager $itemManager, ItemAPIManager $itemAPIManager)
     {
-        $items = [];
-        foreach ($itemManager->getAllItems() as $item) {
-            $items[] = $item;
-        }
+        $items = $itemManager->getAllItems();
 
         return $itemAPIManager->allItemsResponse($items);
     }

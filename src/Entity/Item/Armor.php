@@ -9,7 +9,7 @@ use App\Entity\Item\BaseArmor;
 
 /**
  * @ORM\Table(name="armor")
- * @Serializer\ExclusionPolicy("NONE")
+ * @Serializer\ExclusionPolicy("ALL")
  * @ORM\Entity()
  */
 class Armor extends Item
@@ -35,8 +35,8 @@ class Armor extends Item
     /**
      * @var BaseArmor
      *
-     * @ORM\ManyToOne(targetEntity=BaseArmor::class, inversedBy="id", cascade={"PERSIST"})
-     * @ORM\JoinColumn(name="base_armor_id")
+     * @ORM\ManyToOne(targetEntity=BaseArmor::class, cascade={"PERSIST"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="base_armor_id", referencedColumnName="id")
      * @Serializer\Expose()
      * @Serializer\Inline()
      */
@@ -77,15 +77,18 @@ class Armor extends Item
     /**
      * @return BaseArmor
      */
-    public function getBaseArmor(): BaseArmor
+    public function getBaseItem(): BaseArmor
     {
-        return $this->baseItem;
+        if (!empty ($this->baseItem)) {
+            return $this->baseItem;
+        }
+        return new BaseArmor();
     }
 
     /**
      * @param BaseArmor $baseArmor
      */
-    public function setBaseArmor(BaseArmor $baseArmor): void
+    public function setBaseItem(BaseArmor $baseArmor): void
     {
         $this->baseItem = $baseArmor;
     }
