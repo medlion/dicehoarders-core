@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Manager;
+namespace App\Manager\User;
 
 
-use App\Entity\SfUser;
+use App\Entity\User\SfUser;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +29,7 @@ class UserAPIManager
     public function userLoggedInResponse (SfUser $user)
     {
         $context = new SerializationContext();
-        $context->setGroups(['login']);
+        $context->setGroups(['loginresponse']);
 
         return new JsonResponse($this->serializer->serialize($user, 'json', $context), 200, [], true);
     }

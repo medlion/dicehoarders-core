@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\User;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Manager\UserManager;
 
 /**
  * @ORM\Table("sf_user")

@@ -1,24 +1,24 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 
 use App\ExceptionHandling\UserFriendlyException;
-use App\Manager\UserAPIManager;
-use App\Manager\UserManager;
+use App\Manager\User\UserAPIManager;
+use App\Manager\User\UserManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
-use App\Entity\SfUser;
+use App\Entity\User\SfUser;
 
 /**
  * @Route("/api/noauth")
+ * @SWG\Tag(name="User")
  */
 class NoAuthAPIController extends AbstractController
 {
@@ -42,8 +42,6 @@ class NoAuthAPIController extends AbstractController
      *     @Model(type=SfUser::Class, groups={"loginresponse"})
      * )
      *
-     * @SWG\Tag(name="User")
-     *
      * @param Request $request
      * @param UserManager $userManager
      * @param UserAPIManager $userAPIManager
@@ -62,6 +60,7 @@ class NoAuthAPIController extends AbstractController
 
         return $userAPIManager->userLoggedInResponse($user);
     }
+
 
     /**
      * @Rest\Route(
@@ -83,12 +82,11 @@ class NoAuthAPIController extends AbstractController
      *     @Model(type=SfUser::Class, groups={"loginresponse"})
      * )
      *
-     * @SWG\Tag(name="User")
-     *
      * @param Request $request
      * @param UserManager $userManager
      * @param UserAPIManager $userAPIManager
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|void\
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws UserFriendlyException
      */
     public function loginCheckAction (Request $request, UserManager $userManager, UserAPIManager $userAPIManager)
     {

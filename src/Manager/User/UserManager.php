@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Manager;
+namespace App\Manager\User;
 
 
-use App\Entity\SfUser;
+use App\Entity\User\SfUser;
 use App\ExceptionHandling\UserFriendlyException;
 use Doctrine\Common\Persistence\ObjectManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -85,7 +85,8 @@ class UserManager
      *
      * @param $loginKey
      * @param $plaintextPassword
-     * @return SfUser|object|void|null
+     * @return SfUser|object|null
+     * @throws UserFriendlyException
      */
     public function authenticateUser ($loginKey, $plaintextPassword)
     {
@@ -99,7 +100,8 @@ class UserManager
             throw new UserFriendlyException('Login credentials and password do not match');
         }
 
-        if ($user->getPassword() === $this->userPasswordEncoderInterface->encodePassword($plaintextPassword)) {
+        if ($this->userPasswordEncoderInterface->isPasswordValid($user, $plaintextPassword)) {
+            $user->setToken($this->getToken($user));
             return $user;
         }
 

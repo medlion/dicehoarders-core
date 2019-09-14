@@ -11,17 +11,16 @@ class ExceptionListener
 {
     /**
      * @param ExceptionEvent $exceptionEvent
-     * @return JsonResponse
      */
     public function onKernelException (ExceptionEvent $exceptionEvent)
     {
-        $message = 'An Error Has Occurred';
-        if ($exceptionEvent->getException() instanceof UserFriendlyException) {
+        $message = 'Please navigate to https://xkcd.com/2200/ ';
+        //if ($exceptionEvent->getException() instanceof UserFriendlyException) {
             $message = $exceptionEvent->getException()->getMessage();
-        }
+        //}
 
         $code = 400;
 
-        $exceptionEvent->setResponse(new JsonResponse(['code' => $code, 'message' => $message]), $code);
+        //$exceptionEvent->setResponse(new JsonResponse(['code' => $code, 'message' => $message]), $code);
     }
 }
