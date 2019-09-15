@@ -9,11 +9,13 @@ use App\Entity\Item\BaseArmor;
 
 /**
  * @ORM\Table(name="armor")
- * @Serializer\ExclusionPolicy("ALL")
+ * @Serializer\ExclusionPolicy("NONE")
  * @ORM\Entity()
  */
 class Armor extends Item
 {
+    protected $type = 'Armor';
+
     /**
      * @var int
      *

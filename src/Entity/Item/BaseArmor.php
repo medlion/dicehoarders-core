@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Table(name="base_armor")
- * @Serializer\ExclusionPolicy("ALL")
+ * @Serializer\ExclusionPolicy("NONE")
  * @ORM\Entity()
  */
 class BaseArmor
@@ -19,6 +19,7 @@ class BaseArmor
      * @ORM\Id()
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue()
+     * @Serializer\Exclude()
      */
     private $id;
 
@@ -26,9 +27,9 @@ class BaseArmor
      * @var string
      *
      * @ORM\Column(name="name", type="string")
-     * @Serializer\Expose()
+     * @Serializer\Exclude()
      */
-    private $name;
+    private $baseItemName;
 
     /**
      * @var string
@@ -56,6 +57,7 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="base_ac", type="integer")
+     * @Serializer\Expose()
      */
     private $baseAC;
 
@@ -63,6 +65,7 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="max_dex_ac_bonus", type="integer")
+     * @Serializer\Expose()
      */
     private $maxDexBonus;
 
@@ -70,6 +73,7 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="other_ac_bonus", type="integer")
+     * @Serializer\Expose()
      */
     private $otherBonus;
 
@@ -77,6 +81,7 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="min_str_requirement", type="integer")
+     * @Serializer\Expose()
      */
     private $strRequirement;
 
@@ -84,6 +89,7 @@ class BaseArmor
      * @var bool
      *
      * @ORM\Column(name="stealth_disadvantage", type="boolean")
+     * @Serializer\Expose()
      */
     private $stealthDisadvantage;
 
@@ -91,6 +97,7 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="don_time_turns", type="integer")
+     * @Serializer\Expose()
      */
     private $donTimeTurns;
 
@@ -98,6 +105,7 @@ class BaseArmor
      * @var int
      *
      * @ORM\Column(name="doff_time_turns", type="integer")
+     * @Serializer\Expose()
      */
     private $doffTimeTurns;
 
@@ -112,9 +120,9 @@ class BaseArmor
     /**
      * @return string
      */
-    public function getName()
+    public function getBaseItemName()
     {
-        return $this->name;
+        return $this->baseItemName;
     }
 
     /**

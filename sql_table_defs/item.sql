@@ -1,9 +1,9 @@
-CREATE TABLE item (
-    id INT AUTO_INCREMENT NOT NULL,
-    type INT NOT NULL,
-    cost_copper INT,
-    weight_pounds FLOAT,
-    description LONGTEXT,
-    source VARCHAR(255),
-    PRIMARY KEY (id)
+CREATE TABLE `item`
+(
+    `id`                   int(11)      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `type`                 int(11)      NOT NULL,
+    `name`                 varchar(128) NOT NULL,
+    `description`          longtext     DEFAULT NULL,
+    `physical_description` longtext     DEFAULT NULL,
+    `source`               varchar(255) DEFAULT NULL
 );

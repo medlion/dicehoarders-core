@@ -35,6 +35,7 @@ class ItemManager
      */
     public function getAllItems ()
     {
+        //dd ($this->entityManager->getRepository(Item::class)->findAll());
         return $this->entityManager->getRepository(Item::class)->findAll();
     }
 

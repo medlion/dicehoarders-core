@@ -3,6 +3,7 @@
 
 namespace App\Entity\Item;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use JMS\Serializer\Annotation as Serializer;
@@ -13,21 +14,32 @@ use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * @ORM\Table(name="item")
- * @Serializer\ExclusionPolicy("ALL")
+ * @Serializer\ExclusionPolicy("NONE")
  * @ORM\Entity()
  *
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="integer")
  * @ORM\DiscriminatorMap({
- *     "Item",
- *     1 = "Armor"
+ *             "Item",
+ *              1 = "Armor"
  * })
  * @Serializer\Discriminator(disabled=true)
  */
 abstract class Item
 {
+    const ITEM_TYPE_MAP = [
+        'Item',
+        1 => 'Armor'
+    ];
+
     const COST_COPPER_OVERRIDE = 'cost_copper';
     const WEIGHT_POUNDS_OVERRIDE = 'weight_pounds';
+
+    /**
+     * @var string
+     * @Serializer\Expose()
+     */
+    protected $type;
 
     /**
      * @var int
@@ -39,7 +51,6 @@ abstract class Item
      * @Serializer\Expose()
      */
     private $id;
-
 
     /**
      * @var string
@@ -54,6 +65,7 @@ abstract class Item
      * @var string
      *
      * @ORM\Column(name="description", type="string")
+     * @Serializer\Expose()
      */
     private $description;
 
@@ -62,6 +74,7 @@ abstract class Item
      * @var string
      *
      * @ORM\Column(name="physical_description", type="string")
+     * @Serializer\Expose()
      */
     private $physicalDescription;
 
@@ -86,16 +99,13 @@ abstract class Item
 
 
     /**
-     * @var PersistentCollection
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity=ItemOverride::class, mappedBy="itemId", fetch="EAGER")
+     * @Serializer\Accessor(getter="getItemOverrides", setter="setItemOverrides")
      */
     private $itemOverrides;
 
-    /**
-     * @var array
-     */
-    private $overrides = [];
 
     /**
      * @return int
@@ -118,7 +128,8 @@ abstract class Item
      */
     public function getCostCopper()
     {
-        return $this->loadValue('getCostCopper', self::COST_COPPER_OVERRIDE, 0);
+        //return $this->loadValue('getCostCopper', self::COST_COPPER_OVERRIDE, 0);
+        return $this->costCopper;
     }
 
     /**
@@ -134,7 +145,8 @@ abstract class Item
      */
     public function getWeightPounds()
     {
-        return $this->loadValue('getWeightPounds', self::WEIGHT_POUNDS_OVERRIDE, 0.00);
+        //return $this->loadValue('getWeightPounds', self::WEIGHT_POUNDS_OVERRIDE, 0.00);
+        return $this->weightPounds;
     }
 
     /**
@@ -209,6 +221,43 @@ abstract class Item
         $this->physicalDescription = $physicalDescription;
     }
 
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getItemOverrides()
+    {
+        if (empty($this->itemOverrides)) {
+            return null;
+        }
+        return new ArrayCollection($this->itemOverrides);
+    }
+
+    /**
+     * @param ArrayCollection $itemOverrides
+     */
+    public function setItemOverrides(ArrayCollection $itemOverrides): void
+    {
+        $this->itemOverrides = $itemOverrides;
+    }
+
+
+
 
 
 
@@ -222,15 +271,15 @@ abstract class Item
         $this->itemOverrides = $this->itemOverrides->getValues();
         $this->mapOverrides();
 
-        $this->setCostCopper($this->getCostCopper());
-        $this->setWeightPounds($this->getWeightPounds());
+        //$this->setCostCopper($this->getCostCopper());
+        //$this->setWeightPounds($this->getWeightPounds());
     }
 
     /**
      * This is a general method that loads values. Load order :
-     * 1) DM overrides. This uses serialization magic to allow the DM to hide certain pieces of information from players
-     * 2) Item ability overrides, if applicable
-     * 3) Item type overrides
+     * 1) DM overrides. This uses serialization magic to allow the DM to hide certain pieces of information from players (Not implemented)
+     * 2) Item ability overrides, if applicable (Not implemented)
+     * 3) Item type overrides (Not implemented)
      * 4) Item overrides
      * 5) Base item
      * 6) Default value supplied (null)
@@ -243,7 +292,7 @@ abstract class Item
     private function loadValue ($functionName, $key, $default = null)
     {
         if (method_exists($this->getBaseItem(), $functionName)) {
-            $returnValue = $this->getBaseItem()->getCostCopper();
+            $returnValue = call_user_func([$this->getBaseItem(), $functionName]);
         }
 
         if (isset($this->overrides[$key])) {
@@ -256,9 +305,9 @@ abstract class Item
         return $default;
     }
 
-    private function findOverride ($key) {
-    }
-
+    /**
+     *
+     */
     private function mapOverrides ()
     {
         foreach ($this->itemOverrides as $itemOverride) {
