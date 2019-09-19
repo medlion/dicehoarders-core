@@ -119,6 +119,12 @@ class UserManager
         return true;
     }
 
+
+    public function userMayCreateCampaign (SfUser $sfUser)
+    {
+        return true;
+    }
+
     /**
      * @param string $username
      * @return bool

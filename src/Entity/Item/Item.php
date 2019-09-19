@@ -5,12 +5,10 @@ namespace App\Entity\Item;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 use JMS\Serializer\Annotation as Serializer;
 
 use App\Entity\Item\Armor;
 use App\Entity\Item\ItemOverride;
-use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * @ORM\Table(name="item")
@@ -31,9 +29,6 @@ abstract class Item
         'Item',
         1 => 'Armor'
     ];
-
-    const COST_COPPER_OVERRIDE = 'cost_copper';
-    const WEIGHT_POUNDS_OVERRIDE = 'weight_pounds';
 
     /**
      * @var string
@@ -256,26 +251,9 @@ abstract class Item
         $this->itemOverrides = $itemOverrides;
     }
 
-
-
-
-
-
-    abstract function getBaseItem ();
-
-
     /**
-     * @Serializer\PreSerialize()
-     */
-    private function onPreSerialization () {
-        $this->itemOverrides = $this->itemOverrides->getValues();
-        $this->mapOverrides();
-
-        //$this->setCostCopper($this->getCostCopper());
-        //$this->setWeightPounds($this->getWeightPounds());
-    }
-
-    /**
+     * @deprecated
+     *
      * This is a general method that loads values. Load order :
      * 1) DM overrides. This uses serialization magic to allow the DM to hide certain pieces of information from players (Not implemented)
      * 2) Item ability overrides, if applicable (Not implemented)
@@ -303,15 +281,5 @@ abstract class Item
             return $returnValue;
         }
         return $default;
-    }
-
-    /**
-     *
-     */
-    private function mapOverrides ()
-    {
-        foreach ($this->itemOverrides as $itemOverride) {
-            $this->overrides [$itemOverride->getOverrideKey()] = $itemOverride = $itemOverride->getValue();
-        }
     }
 }

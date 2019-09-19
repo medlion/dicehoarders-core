@@ -2,6 +2,7 @@ nelmio_api_doc:
   areas:
     path_patterns: # an array of regexps
       - ^/api/noauth
+      - ^/api/campaign
   documentation:
     schemes: [https]
     info:
