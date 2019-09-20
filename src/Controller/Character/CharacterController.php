@@ -24,6 +24,8 @@ class CharacterController extends AbstractController
      *     format="JSON"
      * )
      *
+     * TODO Document this endpoint
+     *
      * @param CharacterManager $characterManager
      * @return \App\Entity\Character\Character
      * @throws \App\ExceptionHandling\UserFriendlyException
