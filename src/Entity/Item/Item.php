@@ -240,7 +240,7 @@ abstract class Item
         if (empty($this->itemOverrides)) {
             return null;
         }
-        return new ArrayCollection($this->itemOverrides);
+        return $this->itemOverrides;
     }
 
     /**

@@ -5,7 +5,9 @@ namespace App\Manager\Campaign;
 
 
 use App\Entity\Campaign\Campaign;
+use App\Entity\Character\Character;
 use App\Entity\User\SfUser;
+use App\ExceptionHandling\UserFriendlyException;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CampaignManager
@@ -36,10 +38,38 @@ class CampaignManager
         } while ($this->entityManager->getRepository(Campaign::class)->findBy(['joinCode' => $code]) instanceof Campaign);
 
         $campaign->setJoinCode($code);
+        $campaign->setJoinUnlocked(true);
         $this->entityManager->persist($campaign);
         $this->entityManager->flush();
         return $campaign;
     }
+
+
+    /**
+     * @param Character $character
+     * @param string $joinCode
+     * @return Campaign
+     * @throws UserFriendlyException
+     */
+    public function addCharacterToCampaignByJoinCode ($character, $joinCode)
+    {
+        $campaign = $this->entityManager->getRepository(Campaign::class)->findOneBy(['joinCode' => $joinCode]);
+        if (!$campaign instanceof Campaign) {
+            throw new UserFriendlyException('Invalid campaign join code');
+        }
+        if (!$campaign->isJoinUnlocked()) {
+            throw new UserFriendlyException('Player characters can not be added to this campaign at this time');
+        }
+
+        $character->setCampaign($campaign);
+        $this->entityManager->flush();
+
+        return $campaign;
+    }
+
+    /**
+     * TODO implement campaign join lock/unlock
+     */
 
     /**
      * @return string

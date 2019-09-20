@@ -21,6 +21,8 @@ class Campaign
      * @ORM\Column(name="id", type="integer"),
      * @ORM\GeneratedValue()
      * @ORM\Id()
+     * @Serializer\Groups({"campaigndetailsresponse"})
+     * @Serializer\Expose()
      */
     private $id;
 
@@ -43,10 +45,17 @@ class Campaign
     private $joinCode;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="join_unlocked", type="boolean")
+     */
+    private $joinUnlocked;
+
+    /**
      * @var SfUser
      *
-     * @ORM\Column(name="creator", type="integer")
-     * @ORM\OneToMany(targetEntity=SfUser::class, mappedBy="id")
+     * @ORM\ManyToOne(targetEntity=SfUser::class)
+     * @ORM\JoinColumn(name="creator", referencedColumnName="id")
      */
     private $creator;
 
@@ -112,6 +121,22 @@ class Campaign
     public function setJoinCode(string $joinCode)
     {
         $this->joinCode = $joinCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJoinUnlocked()
+    {
+        return $this->joinUnlocked;
+    }
+
+    /**
+     * @param bool $joinUnlocked
+     */
+    public function setJoinUnlocked(bool $joinUnlocked)
+    {
+        $this->joinUnlocked = $joinUnlocked;
     }
 
     /**
