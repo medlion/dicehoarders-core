@@ -39,3 +39,7 @@ security:
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain: false

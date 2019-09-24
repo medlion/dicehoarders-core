@@ -5,6 +5,7 @@ namespace App\Entity\Campaign;
 
 
 use App\Entity\User\SfUser;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -21,7 +22,7 @@ class Campaign
      * @ORM\Column(name="id", type="integer"),
      * @ORM\GeneratedValue()
      * @ORM\Id()
-     * @Serializer\Groups({"campaigndetailsresponse"})
+     * @Serializer\Groups({"campaigndetailsresponse", "campaignadminsresponse", "campaigndmresponse"})
      * @Serializer\Expose()
      */
     private $id;
@@ -79,14 +80,32 @@ class Campaign
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity=SfUser::class)
+     * @ORM\ManyToMany(targetEntity=SfUser::class, fetch="EAGER")
      * @ORM\JoinTable(name="campaign_dm", joinColumns=
-     *     {@ORM\JoinColumn(name="campaign_id", referencedColumnName="id")}
+     *     {@ORM\JoinColumn(name="campaign_id", referencedColumnName="id")},
      *     inverseJoinColumns=
      *     {@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
+     * @Serializer\Expose()
+     * @Serializer\Groups({"campaigndmresponse"})
+     * @Serializer\Inline()
      */
     private $dms;
+
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity=SfUser::class, fetch="EAGER")
+     * @ORM\JoinTable(name="campaign_admin", joinColumns=
+     *     {@ORM\JoinColumn(name="campaign_id", referencedColumnName="id")},
+     *     inverseJoinColumns=
+     *     {@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
+     * @Serializer\Expose()
+     * @Serializer\Groups({"campaignadminsresponse"})
+     * @Serializer\Inline()
+     */
+    private $admins;
 
     /**
      * @return int
@@ -205,7 +224,7 @@ class Campaign
      */
     public function getDms(): array
     {
-        return $this->dms;
+        return $this->dms->toArray();
     }
 
     /**
@@ -213,8 +232,22 @@ class Campaign
      */
     public function setDms(array $dms): void
     {
-        $this->dms = $dms;
+        $this->dms = new ArrayCollection($dms);
     }
 
+    /**
+     * @return array
+     */
+    public function getAdmins(): array
+    {
+        return $this->admins->toArray();
+    }
 
+    /**
+     * @param array $admins
+     */
+    public function setAdmins(array $admins): void
+    {
+        $this->admins = new ArrayCollection($admins);
+    }
 }

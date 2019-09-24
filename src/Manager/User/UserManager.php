@@ -7,6 +7,7 @@ namespace App\Manager\User;
 use App\Entity\User\SfUser;
 use App\ExceptionHandling\UserFriendlyException;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -18,19 +19,19 @@ class UserManager
     private $userPasswordEncoderInterface;
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
-    private $objectManager;
+    private $entityManager;
 
     /**
      * @var JWTTokenManagerInterface
      */
     private $JWTTokenManagerInterface;
 
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoderInterface, ObjectManager $objectManager, JWTTokenManagerInterface $JWTTokenManagerInterface)
+    public function __construct(UserPasswordEncoderInterface $userPasswordEncoderInterface, EntityManagerInterface $entityManager, JWTTokenManagerInterface $JWTTokenManagerInterface)
     {
         $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
-        $this->objectManager = $objectManager;
+        $this->entityManager = $entityManager;
         $this->JWTTokenManagerInterface = $JWTTokenManagerInterface;
     }
 
@@ -64,8 +65,8 @@ class UserManager
         $user->setValidatedAt(null);
         $user->setToken($this->JWTTokenManagerInterface->create($user));
 
-        $this->getObjectManager()->persist($user);
-        $this->getObjectManager()->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return $user;
     }
@@ -91,9 +92,9 @@ class UserManager
     public function authenticateUser ($loginKey, $plaintextPassword)
     {
         if (! strpos($loginKey, '@')) {
-            $user = $this->getObjectManager()->getRepository(SfUser::class)->findOneBy(['username' => $loginKey]);
+            $user = $this->entityManager->getRepository(SfUser::class)->findOneBy(['username' => $loginKey]);
         } else {
-            $user = $this->getObjectManager()->getRepository(SfUser::class)->findOneBy([ 'email' => $loginKey]);
+            $user = $this->entityManager->getRepository(SfUser::class)->findOneBy([ 'email' => $loginKey]);
         }
 
         if (is_null($user)) {
@@ -116,12 +117,18 @@ class UserManager
      */
     public function getDetailsAvailability ($username, $email)
     {
+        /** TODO Add actual functionality */
         return true;
     }
 
 
+    /**
+     * @param SfUser $sfUser
+     * @return bool
+     */
     public function userMayCreateCampaign (SfUser $sfUser)
     {
+        /** TODO Add actual functionality */
         return true;
     }
 
@@ -131,6 +138,7 @@ class UserManager
      */
     protected function isValidUsername ($username)
     {
+        /** TODO Add more functionality */
         if (!ctype_alnum($username))
         {
             return false;
@@ -145,16 +153,21 @@ class UserManager
      */
     protected function isValidEmail ($email)
     {
+        /** TODO Add actual functionality */
         return true;
     }
 
-
-
     /**
-     * @return ObjectManager
+     * @param int $userId
+     * @return SfUser|object|null
+     * @throws UserFriendlyException
      */
-    protected function getObjectManager ()
+    public function getUserById (int $userId)
     {
-        return $this->objectManager;
+        $user = $this->entityManager->getRepository(SfUser::class)->find($userId);
+        if ($user instanceof SfUser) {
+            return $user;
+        }
+        throw new UserFriendlyException('User not found');
     }
 }

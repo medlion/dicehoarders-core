@@ -45,6 +45,7 @@ class CampaignManager
         do {
             $code = $this->generateCampaignJoinCode();
         } while ($this->entityManager->getRepository(Campaign::class)->findBy(['joinCode' => $code]) instanceof Campaign);
+        $this->addAdminToCampaign($user);
 
         $campaign->setJoinCode($code);
         $campaign->setJoinUnlocked(true);
@@ -79,6 +80,7 @@ class CampaignManager
     /**
      * @param Campaign $campaign
      * @param SfUser $user
+     * @return Campaign
      * @throws UserFriendlyException
      */
     public function addDMToCampaign ($campaign, $user)
@@ -89,6 +91,29 @@ class CampaignManager
         }
         $dms [] = $user;
         $campaign->setDms($dms);
+        $this->entityManager->flush();
+
+        return $campaign;
+    }
+
+
+    /**
+     * @param Campaign $campaign
+     * @param SfUser $user
+     * @return Campaign
+     * @throws UserFriendlyException
+     */
+    public function addAdminToCampaign ($campaign, $user)
+    {
+        $admins = $campaign->getAdmins();
+        if (in_array($user, $admins, true)) {
+            throw new UserFriendlyException('This user is already an admin for the campaign');
+        }
+        $admins [] = $user;
+        $campaign->setAdmins($admins);
+        $this->entityManager->flush();
+
+        return $campaign;
     }
 
     /**

@@ -41,7 +41,7 @@ class SfUser implements UserInterface
     /**
      * @ORM\Column(name="username", type="string", length=180, unique=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"signuprequirement", "loginresponse"})
+     * @Serializer\Groups({"signuprequirement", "loginresponse", "campaigndmresponse", "campaigndmresponse", "campaignadminsresponse"})
      */
     private $username;
 

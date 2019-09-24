@@ -28,4 +28,20 @@ class CampaignAPIManager
 
         return new JsonResponse($this->serializer->serialize($campaign, 'json', $context), 200, [], true);
     }
+
+    public function campaignAdminResponse (Campaign $campaign)
+    {
+        $context = new SerializationContext();
+        $context->setGroups(['campaignadminsresponse']);
+
+        return new JsonResponse($this->serializer->serialize($campaign, 'json', $context), 200, [], true);
+    }
+
+    public function campaignDMResponse (Campaign $campaign)
+    {
+        $context = new SerializationContext();
+        $context->setGroups(['campaigndmresponse']);
+
+        return new JsonResponse($this->serializer->serialize($campaign, 'json', $context), 200, [], true);
+    }
 }
