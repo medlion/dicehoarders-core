@@ -6,9 +6,11 @@ namespace App\Controller\Character;
 use App\Manager\Character\CharacterAPIManager;
 use App\Manager\Character\CharacterManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Character\Character;
 
 /**
  * @Rest\Route("/api/character")
@@ -24,7 +26,11 @@ class CharacterController extends AbstractController
      *     format="JSON"
      * )
      *
-     * TODO Document this endpoint
+     * @SWG\Response(
+     *     response="200",
+     *     description="Character created successfully",
+     *     @Model(type=Character::class, groups={"characterlisting"})
+     * )
      *
      * @param CharacterManager $characterManager
      * @return \App\Entity\Character\Character

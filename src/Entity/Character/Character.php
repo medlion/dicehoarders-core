@@ -24,6 +24,7 @@ class Character
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @Serializer\Expose()
+     * @Serializer\Groups({"characterlisting"})
      */
     private $id;
 
@@ -39,6 +40,9 @@ class Character
      *
      * @ORM\ManyToOne(targetEntity=Campaign::class, fetch="EAGER")
      * @ORM\JoinColumn(name="campaign_id", referencedColumnName="id")
+     * @Serializer\Inline()
+     * @Serializer\Groups({"characterlisting"})
+     * @Serializer\Expose()
      */
     private $campaign;
 

@@ -40,7 +40,7 @@ class CharacterManager
     {
         $character = new Character();
         $character->setUser($user);
-        $character->setStatus(CharacterManager::PC_STATUS_ACTIVE);
+        $character->setStatus(self::PC_STATUS_ACTIVE);
         $this->entityManager->persist($character);
         $this->entityManager->flush();
 

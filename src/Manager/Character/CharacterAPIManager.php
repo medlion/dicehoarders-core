@@ -25,6 +25,7 @@ class CharacterAPIManager
     public function characterResponse (Character $character)
     {
         $context = new SerializationContext();
+        $context->setGroups('characterlisting');
 
         return new JsonResponse($this->serializer->serialize($character, 'json', $context), 200, [], true);
     }

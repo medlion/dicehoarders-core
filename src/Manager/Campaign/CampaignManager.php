@@ -22,6 +22,15 @@ class CampaignManager
         $this->entityManager = $entityManager;
     }
 
+    public function getDomainById ($id)
+    {
+        $campaign = $this->entityManager->getRepository(Campaign::class)->find($id);
+        if ($campaign instanceof Campaign) {
+            return $campaign;
+        }
+        throw new UserFriendlyException('Campaign not found');
+    }
+
 
     /**
      * @param string $name
@@ -68,6 +77,21 @@ class CampaignManager
     }
 
     /**
+     * @param Campaign $campaign
+     * @param SfUser $user
+     * @throws UserFriendlyException
+     */
+    public function addDMToCampaign ($campaign, $user)
+    {
+        $dms = $campaign->getDms();
+        if (in_array($user, $dms, true)) {
+            throw new UserFriendlyException('This user is already a DM for the campaign');
+        }
+        $dms [] = $user;
+        $campaign->setDms($dms);
+    }
+
+    /**
      * TODO implement campaign join lock/unlock
      */
 
@@ -79,4 +103,5 @@ class CampaignManager
         $permitted_chars = '0123456789BCDFGHJKLMNOPRSTVWXYZ0123456789BCDFGHJKLMNOPRSTVWXYZ0123456789BCDFGHJKLMNOPRSTVWXYZ';
         return substr(str_shuffle($permitted_chars), 0, 12);
     }
+
 }

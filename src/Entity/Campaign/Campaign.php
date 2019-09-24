@@ -31,7 +31,8 @@ class Campaign
      *
      * @ORM\Column(name="name", type="string")
      * @Serializer\Expose()
-     * @Serializer\Groups({"campaigncreationrequirement", "campaigndetailsresponse"})
+     * @Serializer\Groups({"campaigncreationrequirement", "campaigndetailsresponse", "characterlisting"})
+     * @Serializer\SerializedName("campaign_name")
      */
     private $name;
 
@@ -74,6 +75,18 @@ class Campaign
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity=SfUser::class)
+     * @ORM\JoinTable(name="campaign_dm", joinColumns=
+     *     {@ORM\JoinColumn(name="campaign_id", referencedColumnName="id")}
+     *     inverseJoinColumns=
+     *     {@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
+     */
+    private $dms;
 
     /**
      * @return int
@@ -187,6 +200,21 @@ class Campaign
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @return array
+     */
+    public function getDms(): array
+    {
+        return $this->dms;
+    }
+
+    /**
+     * @param array $dms
+     */
+    public function setDms(array $dms): void
+    {
+        $this->dms = $dms;
+    }
 
 
 }
