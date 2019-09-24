@@ -86,18 +86,18 @@ class CampaignVoter extends Voter
 
     private function isDM (Campaign $campaign, SfUser $user)
     {
-        return true;
-        /**
-         * TODO Implement this
-         */
+        if (in_array($user, $campaign->getDms(), true)) {
+            return true;
+        }
+        return false;
     }
 
     private function isAdmin (Campaign $campaign, SfUser $user)
     {
-        return true;
-        /**
-         * TODO Implement this
-         */
+        if (in_array($user, $campaign->getAdmins(), true)) {
+            return true;
+        }
+        return false;
     }
 
     private function isPlayer (Campaign $campaign, SfUser $user)

@@ -3,7 +3,6 @@
 
 namespace App\Helper\CustomModelObjects\Campaign;
 
-
 use JMS\Serializer\Annotation as Serializer;
 
 /**
