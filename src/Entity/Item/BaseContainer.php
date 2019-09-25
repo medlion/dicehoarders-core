@@ -33,6 +33,20 @@ class BaseContainer
     private $baseItemName;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="cost_copper", type="integer")
+     */
+    private $costCopper;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="weight_pounds", type="float")
+     */
+    private $weightPounds;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="weight_on_character", type="string")
@@ -77,27 +91,11 @@ class BaseContainer
     }
 
     /**
-     * @param string $baseItemName
-     */
-    public function setBaseItemName($baseItemName)
-    {
-        $this->baseItemName = $baseItemName;
-    }
-
-    /**
      * @return bool
      */
     public function isWeightOnCharacter()
     {
         return $this->weightOnCharacter;
-    }
-
-    /**
-     * @param bool $weightOnCharacter
-     */
-    public function setWeightOnCharacter($weightOnCharacter)
-    {
-        $this->weightOnCharacter = $weightOnCharacter;
     }
 
     /**
@@ -109,27 +107,11 @@ class BaseContainer
     }
 
     /**
-     * @param int $maximumWeightPounds
-     */
-    public function setMaximumWeightPounds($maximumWeightPounds)
-    {
-        $this->maximumWeightPounds = $maximumWeightPounds;
-    }
-
-    /**
      * @return string
      */
     public function getHoldSpecificBaseItem()
     {
         return $this->holdSpecificBaseItem;
-    }
-
-    /**
-     * @param string $holdSpecificBaseItem
-     */
-    public function setHoldSpecificBaseItem($holdSpecificBaseItem)
-    {
-        $this->holdSpecificBaseItem = $holdSpecificBaseItem;
     }
 
     /**
@@ -141,12 +123,19 @@ class BaseContainer
     }
 
     /**
-     * @param bool $carriedOnPerson
+     * @return int
      */
-    public function setCarriedOnPerson($carriedOnPerson)
+    public function getCostCopper(): int
     {
-        $this->carriedOnPerson = $carriedOnPerson;
+        return $this->costCopper;
     }
 
+    /**
+     * @return float
+     */
+    public function getWeightPounds(): float
+    {
+        return $this->weightPounds;
+    }
 
 }

@@ -20,24 +20,15 @@ class Container extends Item
      * @var int
      *
      * @ORM\GeneratedValue()
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\OneToOne(targetEntity=Item::class, cascade={"PERSIST"})
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
     private $id;
-
-
-    /**
-     * @var Item
-     *
-     * @ORM\OneToOne(targetEntity=Item::class, cascade={"PERSIST"})
-     * @ORM\JoinColumn(name="item_id")
-     *
-     */
-    private $item;
 
     /**
      * @var BaseContainer
      *
-     * @ORM\ManyToOne(targetEntity=BaseContainer::class, cascade={"PERSIST"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity=BaseContainer::class, cascade={"PERSIST"}, fetch="EAGER")
      * @ORM\JoinColumn(name="base_container_id", referencedColumnName="id")
      * @Serializer\Expose()
      * @Serializer\Inline()
@@ -52,29 +43,6 @@ class Container extends Item
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return Item
-     */
-    public function getItem(): Item
-    {
-        return $this->item;
-    }
-
-    /**
-     * @param Item $item
-     */
-    public function setItem(Item $item): void
-    {
-        $this->item = $item;
-    }
 
     /**
      * @return BaseContainer

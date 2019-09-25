@@ -19,7 +19,8 @@ use App\Entity\Item\ItemOverride;
  * @ORM\DiscriminatorColumn(name="type", type="integer")
  * @ORM\DiscriminatorMap({
  *             "Item",
- *              1 = "Armor"
+ *              1 = "Armor",
+ *              2 = "Container"
  * })
  * @Serializer\Discriminator(disabled=true)
  */
@@ -27,7 +28,8 @@ abstract class Item
 {
     const ITEM_TYPE_MAP = [
         'Item',
-        1 => 'Armor'
+        1 => 'Armor',
+        2 => 'Container'
     ];
 
     /**
@@ -269,17 +271,6 @@ abstract class Item
      */
     private function loadValue ($functionName, $key, $default = null)
     {
-        if (method_exists($this->getBaseItem(), $functionName)) {
-            $returnValue = call_user_func([$this->getBaseItem(), $functionName]);
-        }
-
-        if (isset($this->overrides[$key])) {
-            $returnValue = $this->overrides[$key];
-        }
-
-        if (!empty($returnValue)) {
-            return $returnValue;
-        }
-        return $default;
+        return true;
     }
 }
