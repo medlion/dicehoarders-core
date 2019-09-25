@@ -77,7 +77,7 @@ class CampaignController extends AbstractController
      *
      * @SWG\Response(
      *     response="200",
-     *     description="User added as campaign admin campaign successfully",
+     *     description="User added as campaign admin successfully",
      *     @Model(type=Campaign::class, groups={"campaignadminsresponse"})
      * )
      *

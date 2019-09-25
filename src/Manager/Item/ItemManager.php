@@ -17,11 +17,10 @@ class ItemManager
         1 => 'armor'
     ];
 
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
 
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)

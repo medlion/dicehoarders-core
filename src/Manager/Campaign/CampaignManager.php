@@ -96,6 +96,18 @@ class CampaignManager
         return $campaign;
     }
 
+    /**
+     * TODO Remove DM from campaign
+     */
+
+    /**
+     * TODO Get campaign DMs
+     */
+
+    /**
+     * TODO Is campaign DM
+     */
+
 
     /**
      * @param Campaign $campaign
@@ -115,6 +127,18 @@ class CampaignManager
 
         return $campaign;
     }
+
+    /**
+     * TODO Remove admin from campaign
+     */
+
+    /**
+     * TODO Get campaign admins
+     */
+
+    /**
+     * TODO Is campaign admin
+     */
 
     /**
      * TODO implement campaign join lock/unlock
