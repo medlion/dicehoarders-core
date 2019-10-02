@@ -19,6 +19,7 @@ class ItemOverride
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue()
      * @ORM\Id()
+     * @Serializer\Exclude()
      */
     private $id;
 
@@ -26,6 +27,8 @@ class ItemOverride
      * @var int
      * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="itemOverrides")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id")
+     *
+     * @Serializer\Exclude()
      *
      */
     private $itemId;

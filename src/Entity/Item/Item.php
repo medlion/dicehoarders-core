@@ -254,6 +254,15 @@ abstract class Item
     }
 
     /**
+     * @return bool
+     */
+    public function isCountable(): bool
+    {
+        return false;
+    }
+
+
+    /**
      * @deprecated
      *
      * This is a general method that loads values. Load order :

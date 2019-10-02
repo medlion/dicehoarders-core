@@ -14,7 +14,10 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Container extends Item
 {
-    protected $type = 'container';
+    protected $type = 'Container';
+
+    const CONTAINER_MAX_WEIGHT_POUNDS = 'maximum_weight_pounds';
+    const COUNTAINER_MAX_HOLD_OF_TYPE = 'maximum_specific_item_number';
 
     /**
      * @var int

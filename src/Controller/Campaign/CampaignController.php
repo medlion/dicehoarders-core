@@ -7,6 +7,9 @@ namespace App\Controller\Campaign;
 use App\ExceptionHandling\UserFriendlyException;
 use App\Manager\Campaign\CampaignAPIManager;
 use App\Manager\Campaign\CampaignManager;
+use App\Manager\Character\CharacterAPIManager;
+use App\Manager\Character\CharacterManager;
+use App\Manager\Item\ItemManager;
 use App\Manager\User\UserManager;
 use App\Security\CampaignVoter;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -138,5 +141,55 @@ class CampaignController extends AbstractController
         $user = $userManager->getUserById($content['user_id']);
 
         return $campaignAPIManager->campaignDMResponse($campaignManager->addDMToCampaign($campaign, $user));
+    }
+
+
+    /**
+     * @Rest\Route(
+     *     "/give-item-character",
+     *     name="post_give_item_to_character",
+     *     methods={"POST"},
+     *     format="JSON"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="character_item",
+     *     in="body",
+     *     @SWG\Schema(ref=@Model(type="App\Helper\CustomModelObjects\Campaign\CampaignGiveItemCharacter"))
+     * )
+     *
+     * @SWG\Response(
+     *     response="200",
+     *     description="Item given to character successfully",
+     *     @Model(type="App\Entity\Character\CharacterItem")),
+     * )
+     *
+     * @param ItemManager $itemManager
+     * @param CharacterManager $characterManager
+     * @param CharacterAPIManager $characterAPIManager
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws UserFriendlyException
+     */
+    public function giveItemToCharacterAsDM (ItemManager $itemManager, CharacterManager $characterManager, CharacterAPIManager $characterAPIManager, Request $request)
+    {
+        $content = json_decode($request->getContent(), true);
+        $character = $characterManager->getCharacterById($content['character_id']);
+        $campaign = $character->getCampaign();
+
+        $this->denyAccessUnlessGranted(CampaignVoter::CAMPAIGN_DM, $campaign);
+
+        $item = $itemManager->getItemById($content['item_id']);
+        $holdingItem = null;
+        if (isset($content['holding_item_id'])) {
+            $holdingItem = $itemManager->getItemById($content['holding_item_id']);
+        }
+        $count = null;
+        if (isset($content['count'])) {
+            $count = (int)$content['count'];
+        }
+
+        $characterItem = $characterManager->giveItemToCharacter($item, $character, $holdingItem, $count);
+        return $characterAPIManager->campaignGiveCharacterItemResponse($characterItem);
     }
 }

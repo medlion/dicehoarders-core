@@ -72,7 +72,7 @@ class CampaignVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         switch ($attribute) {
-            case self::CAMPAIGN_PLAYER:
+            case self::CAMPAIGN_DM:
                 return $this->isDM($subject, $token->getUser());
                 break;
             case self::CAMPAIGN_ADMIN:

@@ -67,6 +67,14 @@ class BaseContainer
      */
     private $holdSpecificBaseItem;
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="maximum_number", type="integer")
+     */
+    private $maximumSpecificItemNumber;
+
     /**
      * @var boolean
      *
@@ -137,5 +145,23 @@ class BaseContainer
     {
         return $this->weightPounds;
     }
+
+    /**
+     * @return int
+     */
+    public function getMaximumSpecificItemNumber(): int
+    {
+        return $this->maximumSpecificItemNumber;
+    }
+
+    /**
+     * @param int $maximumSpecificItemNumber
+     */
+    public function setMaximumSpecificItemNumber(int $maximumSpecificItemNumber): void
+    {
+        $this->maximumSpecificItemNumber = $maximumSpecificItemNumber;
+    }
+
+
 
 }

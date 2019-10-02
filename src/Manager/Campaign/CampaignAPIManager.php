@@ -5,6 +5,7 @@ namespace App\Manager\Campaign;
 
 
 use App\Entity\Campaign\Campaign;
+use App\Entity\Character\CharacterItem;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

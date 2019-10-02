@@ -24,7 +24,7 @@ class Character
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @Serializer\Expose()
-     * @Serializer\Groups({"characterlisting"})
+     * @Serializer\Groups({"characterlisting", "characteritem"})
      */
     private $id;
 

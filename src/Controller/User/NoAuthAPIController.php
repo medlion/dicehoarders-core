@@ -66,7 +66,7 @@ class NoAuthAPIController extends AbstractController
      * @Rest\Route(
      *     "/login-check",
      *     name="post_login_user",
-     *     methods={"POST"},
+     *     methods={"GET"},
      *     format="JSON"
      * )
      *
