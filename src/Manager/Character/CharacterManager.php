@@ -109,6 +109,10 @@ class CharacterManager
         if ($holdingItem->getCharacter()->getId() !== $item->getCharacter()->getId()) {
             throw new UserFriendlyException('Holding item does not have same owner as item');
         }
+
+        /**
+         * TODO Actually implement this? Maybe?
+         */
     }
 
     public function canAddItemToHoldingItem (Item $item, Container $holdingItem)

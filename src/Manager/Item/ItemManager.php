@@ -103,6 +103,8 @@ class ItemManager
                         $itemArray[$itemOverride->getOverrideKey()] += (int)$itemOverride->getValue();
                     } elseif (is_string($itemArray[$itemOverride->getOverrideKey()])) {
                         $itemArray[$itemOverride->getOverrideKey()] .= PHP_EOL . $itemOverride->getValue();
+                    } else {
+                        throw new \Exception('Unknown type to append');
                     }
                 } else {
                     $itemArray[$itemOverride->getOverrideKey()] = $itemOverride->getValue();
