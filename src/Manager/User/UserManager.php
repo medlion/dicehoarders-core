@@ -4,6 +4,7 @@
 namespace App\Manager\User;
 
 
+use App\Entity\Character\Character;
 use App\Entity\User\SfUser;
 use App\ExceptionHandling\UserFriendlyException;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -40,6 +41,7 @@ class UserManager
      * @param $username
      * @param $plaintextPassword
      * @return SfUser
+     * @throws UserFriendlyException
      */
     public function createUser ($email, $username, $plaintextPassword)
     {
@@ -109,7 +111,6 @@ class UserManager
         throw new UserFriendlyException('Login credentials and password do not match');
     }
 
-
     /**
      * @param string $username
      * @param string $email
@@ -130,6 +131,15 @@ class UserManager
     {
         /** TODO Add actual functionality */
         return true;
+    }
+
+    /**
+     * @param SfUser $user
+     * @return Character[]|\App\Entity\Character\CharacterItem[]|object[]
+     */
+    public function getUserCharacters (SfUser $user)
+    {
+        return $this->entityManager->getRepository(Character::class)->findBy(['user' => $user, 'status' => 1]);
     }
 
     /**

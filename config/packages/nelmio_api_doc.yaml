@@ -4,6 +4,7 @@ nelmio_api_doc:
       - ^/api/noauth
       - ^/api/campaign
       - ^/api/character
+      - ^/api/user
   documentation:
     schemes: [https]
     info:
