@@ -7,10 +7,11 @@ namespace App\Manager\User;
 use App\Entity\Character\Character;
 use App\Entity\User\SfUser;
 use App\ExceptionHandling\UserFriendlyException;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserManager
 {
@@ -29,11 +30,17 @@ class UserManager
      */
     private $JWTTokenManagerInterface;
 
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoderInterface, EntityManagerInterface $entityManager, JWTTokenManagerInterface $JWTTokenManagerInterface)
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(UserPasswordEncoderInterface $userPasswordEncoderInterface, EntityManagerInterface $entityManager, JWTTokenManagerInterface $JWTTokenManagerInterface, ValidatorInterface $validator)
     {
         $this->userPasswordEncoderInterface = $userPasswordEncoderInterface;
         $this->entityManager = $entityManager;
         $this->JWTTokenManagerInterface = $JWTTokenManagerInterface;
+        $this->validator = $validator;
     }
 
     /**
@@ -133,13 +140,35 @@ class UserManager
         return true;
     }
 
+
+    public function userMayCreateCharacters (SfUser $sfUser)
+    {
+        /** TODO Add functionality to check whether a user may create characters */
+        return true;
+    }
+
     /**
      * @param SfUser $user
-     * @return Character[]|\App\Entity\Character\CharacterItem[]|object[]
+     * @return Character[]
      */
     public function getUserCharacters (SfUser $user)
     {
         return $this->entityManager->getRepository(Character::class)->findBy(['user' => $user, 'status' => 1]);
+    }
+
+
+    /**
+     * @param int $userId
+     * @return SfUser|object|null
+     * @throws UserFriendlyException
+     */
+    public function getUserById (int $userId)
+    {
+        $user = $this->entityManager->getRepository(SfUser::class)->find($userId);
+        if ($user instanceof SfUser) {
+            return $user;
+        }
+        throw new UserFriendlyException('User not found');
     }
 
     /**
@@ -163,21 +192,19 @@ class UserManager
      */
     protected function isValidEmail ($email)
     {
-        /** TODO Add actual functionality */
-        return true;
-    }
+        $emailConstraint = new Assert\Email();
+        // all constraint "options" can be set this way
+        $emailConstraint->message = 'Invalid email address';
 
-    /**
-     * @param int $userId
-     * @return SfUser|object|null
-     * @throws UserFriendlyException
-     */
-    public function getUserById (int $userId)
-    {
-        $user = $this->entityManager->getRepository(SfUser::class)->find($userId);
-        if ($user instanceof SfUser) {
-            return $user;
+        // use the validator to validate the value
+        $errors = $this->validator->validate(
+            $email,
+            $emailConstraint
+        );
+
+        if (0 === count($errors)) {
+            return true;
         }
-        throw new UserFriendlyException('User not found');
+        return false;
     }
 }
