@@ -14,6 +14,8 @@ class ExceptionListener
      */
     public function onKernelException (ExceptionEvent $exceptionEvent)
     {
+        /** TODO Implement admin to get special exceptions */
+
         $message = 'Please navigate to https://xkcd.com/2200/ ';
         //if ($exceptionEvent->getException() instanceof UserFriendlyException) {
             $message = $exceptionEvent->getException()->getMessage();
