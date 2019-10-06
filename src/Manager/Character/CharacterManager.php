@@ -127,7 +127,8 @@ class CharacterManager
     /**
      * @param Character $character
      * @param Item|null $item
-     * @return \App\Entity\Campaign\Campaign[]|CharacterItem[]|object[]
+     * @return array
+     * @throws \Exception
      */
     public function getCharacterContainers (Character $character, Item $item = null)
     {
@@ -136,6 +137,11 @@ class CharacterManager
         $characterItems = $this->entityManager->getRepository(CharacterItem::class)->findBy(['character' => $character]);
         foreach ($characterItems as $characterItem) {
             if ($characterItem->getItem() instanceof Container) {
+                if (!is_null($item) &&
+                    !($characterItem->getItem()->getBaseItem()->getHoldSpecificBaseItem() === null
+                        || $characterItem->getItem()->getBaseItem()->getHoldSpecificBaseItem() === $item->getBaseItem()->getBaseItemName())) {
+                    continue;
+                }
                 $itemArray = $this->itemManager->applyItemOverridesAsArray($characterItem->getItem());
 
                 $entry = [];
@@ -148,10 +154,6 @@ class CharacterManager
                 $entry ['item_holding_count'] = $itemArray[Container::COUNTAINER_MAX_HOLD_OF_TYPE] ?? null;
 
                 $response [] = $entry;
-
-                /**
-                 * TODO Add handling of item type
-                 */
             }
         }
 

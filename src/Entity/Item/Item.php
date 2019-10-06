@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 use App\Entity\Item\Armor;
+use App\Entity\Item\Container;
+use App\Entity\Item\Ammunition;
 use App\Entity\Item\ItemOverride;
 
 /**
@@ -21,7 +23,7 @@ use App\Entity\Item\ItemOverride;
  *             "Item",
  *              1 = "Armor",
  *              2 = "Container",
- *              3 = 'Ammunition'
+ *              3 = "Ammunition"
  * })
  * @Serializer\Discriminator(disabled=true)
  */
