@@ -114,4 +114,9 @@ class ItemManager
 
         return $itemArray;
     }
+
+    public function getCountableItemCarryWeight (Item $item)
+    {
+        /** Todo Implement getCountableItemCarryWeight */
+    }
 }

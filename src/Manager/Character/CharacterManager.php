@@ -120,15 +120,37 @@ class CharacterManager
         }
 
         $characterItem->setHoldingItem($holdingItem);
+        $this->entityManager->flush();
     }
 
+    /**
+     * @param Item $item
+     * @param CharacterItem $holdingItem
+     * @param int $count
+     * @return bool
+     * @throws UserFriendlyException
+     */
     public function canAddItemToHoldingItem (Item $item, CharacterItem $holdingItem, $count = 1)
     {
-        return $this->entityManager->createQueryBuilder()
-            ->select('ci.item')
-            ->from(CharacterItem::class, 'ci');
+        $itemArray = $this->itemManager->applyItemOverridesAsArray($item);
+        $container = $holdingItem->getItem();
 
-        /** TODO Complete */
+        if (!$container instanceof Container) {
+            throw new UserFriendlyException('Holding item is not a container');
+        }
+
+        if (!is_null($container->getBaseItem()->getHoldSpecificBaseItem())) {
+            /** TODO Allow for overrides */
+            if ($container->getBaseItem()->getHoldSpecificBaseItem() !== $item->getBaseItem()->getBaseItemName()) {
+                throw new UserFriendlyException('This holding item can only hold items of type '. $container->getBaseItem()->getHoldSpecificBaseItem());
+            }
+
+            /** TODO Complete */
+
+        }
+
+
+        return true;
     }
 
     /**
