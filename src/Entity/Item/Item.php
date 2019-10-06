@@ -29,7 +29,8 @@ abstract class Item
     const ITEM_TYPE_MAP = [
         'Item',
         1 => 'Armor',
-        2 => 'Container'
+        2 => 'Container',
+        3 => 'Ammunition'
     ];
 
     /**
