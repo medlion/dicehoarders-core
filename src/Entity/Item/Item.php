@@ -20,7 +20,8 @@ use App\Entity\Item\ItemOverride;
  * @ORM\DiscriminatorMap({
  *             "Item",
  *              1 = "Armor",
- *              2 = "Container"
+ *              2 = "Container",
+ *              3 = 'Ammunition'
  * })
  * @Serializer\Discriminator(disabled=true)
  */
