@@ -42,9 +42,9 @@ class CharacterItem
     private $item;
 
     /**
-     * @var Container
+     * @var CharacterItem
      *
-     * @ORM\OneToOne(targetEntity=Container::class)
+     * @ORM\OneToOne(targetEntity=CharacterItem::class)
      */
     private $holdingItem;
 
@@ -104,7 +104,7 @@ class CharacterItem
     }
 
     /**
-     * @return Container
+     * @return CharacterItem
      */
     public function getHoldingItem()
     {
@@ -112,11 +112,13 @@ class CharacterItem
     }
 
     /**
-     * @param Container $holdingItem
+     * @param CharacterItem $holdingItem
      */
-    public function setHoldingItem(Container $holdingItem)
+    public function setHoldingItem(CharacterItem $holdingItem)
     {
-        $this->holdingItem = $holdingItem;
+        if ($holdingItem->getItem() instanceof Container) {
+            $this->holdingItem = $holdingItem;
+        }
     }
 
     /**

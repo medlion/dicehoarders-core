@@ -101,21 +101,28 @@ class CharacterManager
         return $characterItem;
     }
 
-    public function addItemToHoldingItem (CharacterItem $item, CharacterItem $holdingItem) {
+    /**
+     * @param CharacterItem $characterItem
+     * @param CharacterItem $holdingItem
+     * @throws UserFriendlyException
+     */
+    public function addCharacterItemToHoldingItem (CharacterItem $characterItem, CharacterItem $holdingItem) {
         if (! $holdingItem->getItem() instanceof Container) {
             throw new UserFriendlyException('Holding item is not a container');
         }
 
-        if ($holdingItem->getCharacter()->getId() !== $item->getCharacter()->getId()) {
+        if ($holdingItem->getCharacter()->getId() !== $characterItem->getCharacter()->getId()) {
             throw new UserFriendlyException('Holding item does not have same owner as item');
         }
 
-        /**
-         * TODO Actually implement this? Maybe?
-         */
+        if (!$this->canAddItemToHoldingItem($characterItem->getItem(), $holdingItem, $characterItem->getCount())) {
+            throw new UserFriendlyException('Can not add this item to holding item');
+        }
+
+        $characterItem->setHoldingItem($holdingItem);
     }
 
-    public function canAddItemToHoldingItem (Item $item, Container $holdingItem)
+    public function canAddItemToHoldingItem (Item $item, CharacterItem $holdingItem, $count = 1)
     {
         return $this->entityManager->createQueryBuilder()
             ->select('ci.item')
