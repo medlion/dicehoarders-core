@@ -138,4 +138,9 @@ class CharacterItem
     }
 
 
+    /**
+     * Todo Add Attunement level and DM override
+     */
+
+
 }

@@ -267,23 +267,6 @@ abstract class Item
 
 
     /**
-     * @deprecated
-     *
-     * This is a general method that loads values. Load order :
-     * 1) DM overrides. This uses serialization magic to allow the DM to hide certain pieces of information from players (Not implemented)
-     * 2) Item ability overrides, if applicable (Not implemented)
-     * 3) Item type overrides (Not implemented)
-     * 4) Item overrides
-     * 5) Base item
-     * 6) Default value supplied (null)
-     *
-     * @param $functionName
-     * @param $key
-     * @param null $default
-     * @return |null
+     * TODO Add abilities and rarity
      */
-    private function loadValue ($functionName, $key, $default = null)
-    {
-        return true;
-    }
 }
