@@ -44,14 +44,14 @@ class BaseArmor
      *
      * @ORM\Column(name="cost_copper", type="integer")
      */
-    private $costCopper;
+    protected $costCopper;
 
     /**
      * @var float
      *
      * @ORM\Column(name="weight_pounds", type="float")
      */
-    private $weightPounds;
+    protected $weightPounds;
 
     /**
      * @var int
@@ -59,7 +59,7 @@ class BaseArmor
      * @ORM\Column(name="base_ac", type="integer")
      * @Serializer\Expose()
      */
-    private $baseAC;
+    protected $baseAC;
 
     /**
      * @var int
@@ -67,7 +67,7 @@ class BaseArmor
      * @ORM\Column(name="max_dex_ac_bonus", type="integer")
      * @Serializer\Expose()
      */
-    private $maxDexBonus;
+    protected $maxDexBonus;
 
     /**
      * @var int
@@ -75,7 +75,7 @@ class BaseArmor
      * @ORM\Column(name="other_ac_bonus", type="integer")
      * @Serializer\Expose()
      */
-    private $otherBonus;
+    protected $otherBonus;
 
     /**
      * @var int
@@ -83,7 +83,7 @@ class BaseArmor
      * @ORM\Column(name="min_str_requirement", type="integer")
      * @Serializer\Expose()
      */
-    private $strRequirement;
+    protected $strRequirement;
 
     /**
      * @var bool
@@ -91,7 +91,7 @@ class BaseArmor
      * @ORM\Column(name="stealth_disadvantage", type="boolean")
      * @Serializer\Expose()
      */
-    private $stealthDisadvantage;
+    protected $stealthDisadvantage;
 
     /**
      * @var int
@@ -99,7 +99,7 @@ class BaseArmor
      * @ORM\Column(name="don_time_turns", type="integer")
      * @Serializer\Expose()
      */
-    private $donTimeTurns;
+    protected $donTimeTurns;
 
     /**
      * @var int
@@ -107,7 +107,7 @@ class BaseArmor
      * @ORM\Column(name="doff_time_turns", type="integer")
      * @Serializer\Expose()
      */
-    private $doffTimeTurns;
+    protected $doffTimeTurns;
 
     /**
      * @return int
