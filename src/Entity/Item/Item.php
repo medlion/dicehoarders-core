@@ -3,6 +3,7 @@
 
 namespace App\Entity\Item;
 
+use App\Helper\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -11,6 +12,8 @@ use App\Entity\Item\Armor;
 use App\Entity\Item\Container;
 use App\Entity\Item\Ammunition;
 use App\Entity\Item\ItemOverride;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * @ORM\Table(name="item")
@@ -100,10 +103,12 @@ abstract class Item
 
 
     /**
-     * @var ArrayCollection
+     * @var ItemOverride[]
      *
      * @ORM\OneToMany(targetEntity=ItemOverride::class, mappedBy="itemId", fetch="EAGER")
      * @Serializer\Accessor(getter="getItemOverrides", setter="setItemOverrides")
+     *
+     * @Serializer\Exclude()
      */
     private $itemOverrides;
 
@@ -239,7 +244,7 @@ abstract class Item
     }
 
     /**
-     * @return ArrayCollection|null
+     * @return ItemOverride[]|null
      */
     public function getItemOverrides()
     {
@@ -263,6 +268,26 @@ abstract class Item
     public function isCountable(): bool
     {
         return false;
+    }
+
+    public abstract function getBaseItem();
+
+    /**
+     * By Bahamut, I hate the magic in this function. That being said...
+     *
+     * @Serializer\PreSerialize()
+     *
+     * @throws ReflectionException
+     */
+    public function applyItemOverrides ()
+    {
+        foreach ($this->getItemOverrides() as $itemOverride) {
+            $key = Tools::snakeCaseToCamelCase($itemOverride->getOverrideKey(), false);
+            $class = new ReflectionClass($this->getBaseItem());
+            $property = $class->getProperty($key);
+            $property->setAccessible(true);
+            $property->setValue($this->getBaseItem(), $itemOverride->getValue());
+        }
     }
 
 
