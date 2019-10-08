@@ -177,9 +177,9 @@ class CharacterManager
                 $entry ['character_item_id'] = $characterItem->getId();
                 $entry ['item_name'] = $container->getName();
                 $entry ['container_holding_item_item_type'] = $container->getBaseItem()->getHoldSpecificBaseItem();
-                $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarryingWeight($characterItem->getId());
+                $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarryingWeight($characterItem);
                 $entry ['item_holding_weight'] = $container->getBaseItem()->getMaximumWeightPounds();
-                $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarryingCount($characterItem->getId());
+                $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarryingCount($characterItem);
                 $entry ['item_holding_count'] = $container->getBaseItem()->getMaximumSpecificItemNumber();
 
                 $response [] = $entry;
@@ -199,7 +199,7 @@ class CharacterManager
     }
 
 
-    public function getCharacterHoldingItemCarryingWeight (Container $container)
+    public function getCharacterHoldingItemCarryingWeight (CharacterItem $characterItem)
     {
         /**
          * TODO Do the gin tax
@@ -207,7 +207,7 @@ class CharacterManager
         return 0;
     }
 
-    public function getCharacterHoldingItemCarryingCount (Container $container)
+    public function getCharacterHoldingItemCarryingCount (CharacterItem $characterItem)
     {
         /**
          * TODO Do the gin tax
