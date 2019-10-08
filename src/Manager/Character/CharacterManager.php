@@ -180,7 +180,7 @@ class CharacterManager
                 $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarryingWeight($characterItem->getItem());
                 $entry ['item_holding_weight'] = $itemArray[Container::CONTAINER_MAX_WEIGHT_POUNDS] ?? null;
                 $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarryingCount($characterItem->getItem());
-                $entry ['item_holding_count'] = $itemArray[Container::COUNTAINER_MAX_HOLD_OF_TYPE] ?? null;
+                $entry ['item_holding_count'] = $itemArray[Container::CONTAINER_MAX_HOLD_OF_TYPE] ?? null;
 
                 $response [] = $entry;
             }
