@@ -171,16 +171,16 @@ class CharacterManager
                         || $characterItem->getItem()->getBaseItem()->getHoldSpecificBaseItem() === $item->getBaseItem()->getBaseItemName())) {
                     continue;
                 }
-                $itemArray = $this->itemManager->applyItemOverridesAsArray($characterItem->getItem());
+                $container = $this->itemManager->getItemAsObject($characterItem->getItem());
 
                 $entry = [];
                 $entry ['character_item_id'] = $characterItem->getId();
-                $entry ['item_name'] = $characterItem->getItem()->getName();
-                $entry ['container_holding_item_item_type'] = $characterItem->getItem()->getBaseItem()->getHoldSpecificBaseItem();
-                $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarryingWeight($characterItem->getItem());
-                $entry ['item_holding_weight'] = $itemArray[Container::CONTAINER_MAX_WEIGHT_POUNDS] ?? null;
-                $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarryingCount($characterItem->getItem());
-                $entry ['item_holding_count'] = $itemArray[Container::CONTAINER_MAX_HOLD_OF_TYPE] ?? null;
+                $entry ['item_name'] = $container->getName();
+                $entry ['container_holding_item_item_type'] = $container->getBaseItem()->getHoldSpecificBaseItem();
+                $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarryingWeight($characterItem->getId());
+                $entry ['item_holding_weight'] = $container->getBaseItem()->getMaximumWeightPounds();
+                $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarryingCount($characterItem->getId());
+                $entry ['item_holding_count'] = $container->getBaseItem()->getMaximumSpecificItemNumber();
 
                 $response [] = $entry;
             }

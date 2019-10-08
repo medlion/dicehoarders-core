@@ -113,6 +113,27 @@ class ItemManager
         }
 
         return $itemArray;
+
+        /** TODO Hacktoberfest Remove this function */
+    }
+
+    /**
+     * @param Item $item
+     * @return array
+     */
+    public function getItemAsArray (Item $item)
+    {
+        return json_decode($this->serializer->serialize($item, 'json'), true);
+    }
+
+    /**
+     * @param Item $item
+     * @return Item
+     * @throws \ReflectionException
+     */
+    public function getItemAsObject (Item $item)
+    {
+        return $item->applyItemOverrides();
     }
 
     public function getCountableItemCarryWeight (Item $item)

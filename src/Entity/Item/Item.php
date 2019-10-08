@@ -288,6 +288,8 @@ abstract class Item
             $property->setAccessible(true);
             $property->setValue($this->getBaseItem(), $itemOverride->getValue());
         }
+
+        return $this;
     }
 
 
