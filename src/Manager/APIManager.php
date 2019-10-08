@@ -1,15 +1,16 @@
 <?php
 
 
-namespace App\Manager\Item;
+namespace App\Manager;
 
 
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ItemAPIManager
+class APIManager
 {
+
     /**
      * @var SerializerInterface
      */
@@ -20,17 +21,14 @@ class ItemAPIManager
         $this->serializer = $serializer;
     }
 
-
-    /**
-     * @param array $items
-     * @return JsonResponse
-     */
-    public function allItemsResponse (array $items)
+    public function jsonSerialize ($object)
     {
         $context = new SerializationContext();
-
-        return new JsonResponse($this->serializer->serialize($items, 'json', $context), 200, [], true);
+        return new JsonResponse($this->getSerializer()->serialize($object, 'json', $context), 200, [], true);
     }
 
-    /** TODO Hacktoberfest extend API manager, remove constructor */
+    protected function getSerializer ()
+    {
+        return $this->serializer;
+    }
 }

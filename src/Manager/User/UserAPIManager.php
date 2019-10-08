@@ -46,4 +46,6 @@ class UserAPIManager
 
         return new JsonResponse($this->serializer->serialize($characters, 'json', $context), 200, [], true);
     }
+
+    /** TODO Hacktoberfest extend API manager, remove constructor */
 }

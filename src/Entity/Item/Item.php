@@ -277,16 +277,20 @@ abstract class Item
      *
      * @Serializer\PreSerialize()
      *
-     * @throws ReflectionException
+     * @return $this
      */
     public function applyItemOverrides ()
     {
         foreach ($this->getItemOverrides() as $itemOverride) {
-            $key = Tools::snakeCaseToCamelCase($itemOverride->getOverrideKey(), false);
-            $class = new ReflectionClass($this->getBaseItem());
-            $property = $class->getProperty($key);
-            $property->setAccessible(true);
-            $property->setValue($this->getBaseItem(), $itemOverride->getValue());
+            try {
+                $key = Tools::snakeCaseToCamelCase($itemOverride->getOverrideKey(), false);
+                $class = new ReflectionClass($this->getBaseItem());
+                $property = $class->getProperty($key);
+                $property->setAccessible(true);
+                $property->setValue($this->getBaseItem(), $itemOverride->getValue());
+            } catch (\Exception $exception) {
+                continue;
+            }
         }
 
         return $this;

@@ -189,6 +189,11 @@ class CharacterManager
         return $response;
     }
 
+    public function getAllCharacterItems (Character $character)
+    {
+        return $this->entityManager->getRepository(CharacterItem::class)->findBy(['character' => $character]);
+    }
+
     /**
      * @param int $characterId
      * @return Character|object|null

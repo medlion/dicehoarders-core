@@ -45,4 +45,6 @@ class CampaignAPIManager
 
         return new JsonResponse($this->serializer->serialize($campaign, 'json', $context), 200, [], true);
     }
+
+    /** TODO Hacktoberfest extend API manager, remove constructor */
 }
