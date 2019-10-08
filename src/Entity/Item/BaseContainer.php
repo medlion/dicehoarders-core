@@ -107,7 +107,7 @@ class BaseContainer
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getMaximumWeightPounds()
     {
@@ -115,7 +115,7 @@ class BaseContainer
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getHoldSpecificBaseItem()
     {
@@ -133,7 +133,7 @@ class BaseContainer
     /**
      * @return int
      */
-    public function getCostCopper(): int
+    public function getCostCopper()
     {
         return $this->costCopper;
     }
@@ -147,9 +147,9 @@ class BaseContainer
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaximumSpecificItemNumber(): int
+    public function getMaximumSpecificItemNumber()
     {
         return $this->maximumSpecificItemNumber;
     }
