@@ -132,15 +132,14 @@ class CharacterManager
      */
     public function canAddItemToHoldingItem (Item $item, CharacterItem $holdingItem, $count = 1)
     {
-        $itemArray = $this->itemManager->applyItemOverridesAsArray($item);
-        $container = $holdingItem->getItem();
+        $item = $this->itemManager->getItemAsObject($item);
+        $container = $this->itemManager->getItemAsObject($holdingItem->getItem());
 
         if (!$container instanceof Container) {
             throw new UserFriendlyException('Holding item is not a container');
         }
 
         if (!is_null($container->getBaseItem()->getHoldSpecificBaseItem())) {
-            /** TODO Allow for overrides */
             if ($container->getBaseItem()->getHoldSpecificBaseItem() !== $item->getBaseItem()->getBaseItemName()) {
                 throw new UserFriendlyException('This holding item can only hold items of type '. $container->getBaseItem()->getHoldSpecificBaseItem());
             }
@@ -189,9 +188,18 @@ class CharacterManager
         return $response;
     }
 
+    /**
+     * @param Character $character
+     * @return array
+     */
     public function getAllCharacterItems (Character $character)
     {
-        return $this->entityManager->getRepository(CharacterItem::class)->findBy(['character' => $character]);
+        $characterItems = $this->entityManager->getRepository(CharacterItem::class)->findBy(['character' => $character]);
+        $items = [];
+        foreach ($characterItems as $characterItem) {
+            $items [] = $characterItem->getItem();
+        }
+        return $items;
     }
 
     /**
