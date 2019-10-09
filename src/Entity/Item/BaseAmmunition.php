@@ -36,21 +36,21 @@ class BaseAmmunition extends Countable
      *
      * @ORM\Column(name="cost_copper", type="integer")
      */
-    private $costCopper;
+    protected $costCopper;
 
     /**
      * @var float
      *
      * @ORM\Column(name="weight_pounds", type="float")
      */
-    private $weightPounds;
+    protected $weightPounds;
 
     /**
      * @var int
      *
      * @ORM\Column(name="bundle_size", type="integer")
      */
-    private $bundleSize;
+    protected $bundleSize;
 
     /**
      * @return int

@@ -37,35 +37,35 @@ class BaseContainer
      *
      * @ORM\Column(name="cost_copper", type="integer")
      */
-    private $costCopper;
+    protected $costCopper;
 
     /**
      * @var float
      *
      * @ORM\Column(name="weight_pounds", type="float")
      */
-    private $weightPounds;
+    protected $weightPounds;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="weight_on_character", type="string")
      */
-    private $weightOnCharacter;
+    protected $weightOnCharacter;
 
     /**
      * @var int
      *
      * @ORM\Column(name="maximum_weight_pounds", type="integer")
      */
-    private $maximumWeightPounds;
+    protected $maximumWeightPounds;
 
     /**
      * @var string
      *
      * @ORM\Column(name="hold_specific_base_item", type="string")
      */
-    private $holdSpecificBaseItem;
+    protected $holdSpecificBaseItem;
 
 
     /**
@@ -73,14 +73,14 @@ class BaseContainer
      *
      * @ORM\Column(name="maximum_number", type="integer")
      */
-    private $maximumSpecificItemNumber;
+    protected $maximumSpecificItemNumber;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="carried_on_person", type="boolean")
      */
-    private $carriedOnPerson;
+    protected $carriedOnPerson;
 
     /**
      * @return int
