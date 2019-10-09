@@ -243,6 +243,8 @@ class CharacterManager
             }
         }
 
+        /** TODO What of items not on character? */
+
         return $weight;
     }
 
