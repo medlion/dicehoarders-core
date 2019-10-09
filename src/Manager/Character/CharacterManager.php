@@ -176,9 +176,9 @@ class CharacterManager
                 $entry ['character_item_id'] = $characterItem->getId();
                 $entry ['item_name'] = $container->getName();
                 $entry ['container_holding_item_item_type'] = $container->getBaseItem()->getHoldSpecificBaseItem();
-                $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarryingWeight($characterItem);
+                $entry ['current_item_holding_weight'] = $this->getCharacterHoldingItemCarriedWeight($characterItem);
                 $entry ['item_holding_weight'] = $container->getBaseItem()->getMaximumWeightPounds();
-                $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarryingCount($characterItem);
+                $entry ['current_item_holding_count'] = $this->getCharacterHoldingItemCarriedCount($characterItem);
                 $entry ['item_holding_count'] = $container->getBaseItem()->getMaximumSpecificItemNumber();
 
                 $response [] = $entry;
@@ -212,7 +212,7 @@ class CharacterManager
     }
 
 
-    public function getCharacterHoldingItemCarryingWeight (CharacterItem $characterItem)
+    public function getCharacterHoldingItemCarriedWeight (CharacterItem $characterItem)
     {
         /**
          * TODO Do the gin tax
@@ -220,11 +220,25 @@ class CharacterManager
         return 0;
     }
 
-    public function getCharacterHoldingItemCarryingCount (CharacterItem $characterItem)
+    public function getCharacterHoldingItemCarriedCount (CharacterItem $characterItem)
     {
-        /**
-         * TODO Do the gin tax
-         */
-        return 0;
+        $holdingItem = $characterItem->getItem();
+
+        if (!$holdingItem instanceof Container) {
+            throw new \Exception('Holding item is not a container');
+        }
+
+        if ($holdingItem->getBaseItem()->getHoldSpecificBaseItem() === null) {
+            return 0;
+        }
+
+        $characterItems = $this->entityManager->getRepository(CharacterItem::class)->findBy(['holdingItem' => $holdingItem]);
+
+        $count = 0;
+        foreach ($characterItems as $item) {
+            $count += $item->getCount();
+        }
+
+        return $count;
     }
 }

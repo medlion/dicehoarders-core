@@ -51,6 +51,8 @@ class CharacterItem
     /**
      * @var int
      * @Serializer\Type("integer")
+     *
+     * @ORM\Column(name="count")
      */
     private $count;
 
