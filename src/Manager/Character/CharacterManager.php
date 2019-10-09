@@ -212,14 +212,45 @@ class CharacterManager
     }
 
 
-    public function getCharacterHoldingItemCarriedWeight (CharacterItem $characterItem)
+    /**
+     * @param CharacterItem $characterItemContainer
+     * @return float
+     * @throws \Exception
+     */
+    public function getCharacterHoldingItemCarriedWeight (CharacterItem $characterItemContainer)
     {
-        /**
-         * TODO Do the gin tax
-         */
-        return 0;
+        $holdingItem = $this->itemManager->getItemAsObject($characterItemContainer->getItem());
+
+        if (!$holdingItem instanceof Container) {
+            throw new \Exception('Holding item is not a container');
+        }
+
+        $characterItems = $this->entityManager->getRepository(CharacterItem::class)->findBy(['holdingItem' => $holdingItem]);
+
+        $weight = $holdingItem->getWeightPounds();
+
+        foreach ($characterItems as $characterItem) {
+            $item = $this->itemManager->getItemAsObject($characterItem->getItem());
+
+            if ($characterItem->getItem() instanceof Container) {
+                if ($item->getBaseItem()->isWeightOnCharacter()) {
+                    return $item->getWeightPounds();
+                }
+
+                $weight += $this->getCharacterHoldingItemCarriedWeight($characterItem);
+            } else {
+                $weight += $item->getWeightPounds();
+            }
+        }
+
+        return $weight;
     }
 
+    /**
+     * @param CharacterItem $characterItem
+     * @return int
+     * @throws \Exception
+     */
     public function getCharacterHoldingItemCarriedCount (CharacterItem $characterItem)
     {
         $holdingItem = $characterItem->getItem();
@@ -229,6 +260,10 @@ class CharacterManager
         }
 
         if ($holdingItem->getBaseItem()->getHoldSpecificBaseItem() === null) {
+            return 0;
+        }
+
+        if (!$holdingItem->getBaseItem()->isCarriedOnPerson()) {
             return 0;
         }
 
