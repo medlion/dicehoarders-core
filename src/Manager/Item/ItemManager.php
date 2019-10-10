@@ -5,6 +5,7 @@ namespace App\Manager\Item;
 
 
 use App\Entity\Campaign\Campaign;
+use App\Entity\Item\Countable;
 use App\Entity\Item\Item;
 use App\Entity\Item\ItemOverride;
 use App\ExceptionHandling\UserFriendlyException;
@@ -122,8 +123,25 @@ class ItemManager
         return $item->applyItemOverrides();
     }
 
-    public function getCountableItemCarryWeight (Item $item)
+    /**
+     * @param Item $item
+     * @param int $count
+     * @return int
+     */
+    public function getCountableItemCarryWeight (Item $item, int $count=1)
     {
-        /** Todo Implement getCountableItemCarryWeight */
+        if (!$item instanceof Countable) {
+            return $item->getWeightPounds() * $count;
+        }
+
+        $countableItem = $this->getItemAsObject($item);
+        $weight = 1;
+        if ($count % $item->getBaseItem()->getBundleSize() === 0) {
+            $weight = 0;
+        }
+
+        $weight += (int) $count/$item->getBaseItem()->getBundleSize();
+
+        return $weight;
     }
 }

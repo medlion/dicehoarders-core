@@ -46,13 +46,6 @@ class BaseAmmunition extends Countable
     protected $weightPounds;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="bundle_size", type="integer")
-     */
-    protected $bundleSize;
-
-    /**
      * @return int
      */
     public function getId(): int
