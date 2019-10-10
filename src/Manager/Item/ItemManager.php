@@ -134,13 +134,12 @@ class ItemManager
             return $item->getWeightPounds() * $count;
         }
 
-        $countableItem = $this->getItemAsObject($item);
         $weight = 1;
-        if ($count % $item->getBaseItem()->getBundleSize() === 0) {
+        if ($count % $this->getItemAsObject($item)->getBaseItem()->getBundleSize() === 0) {
             $weight = 0;
         }
 
-        $weight += (int) $count/$item->getBaseItem()->getBundleSize();
+        $weight += (int) $count/$this->getItemAsObject($item)->getBaseItem()->getBundleSize();
 
         return $weight;
     }

@@ -239,7 +239,7 @@ class CharacterManager
 
                 $weight += $this->getCharacterHoldingItemCarriedWeight($characterItem);
             } else {
-                $weight += $item->getWeightPounds();
+                $weight += $this->itemManager->getCountableItemCarryWeight($characterItem->getItem(), $characterItem->getCount());
             }
         }
 
