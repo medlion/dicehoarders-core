@@ -111,6 +111,8 @@ abstract class Item
     private $itemOverrides;
 
     /**
+     * TODO Add some validation on this
+     *
      * @var string
      *
      * @ORM\Column(name="rarity", type="string")
@@ -323,6 +325,6 @@ abstract class Item
 
 
     /**
-     * TODO Add abilities and rarity
+     * TODO Add abilities
      */
 }
