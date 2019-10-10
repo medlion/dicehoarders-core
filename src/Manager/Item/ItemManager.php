@@ -130,16 +130,14 @@ class ItemManager
      */
     public function getCountableItemCarryWeight (Item $item, int $count=1)
     {
-        if (!$item instanceof Countable) {
+        if (!$item->getBaseItem() instanceof Countable) {
             return $item->getWeightPounds() * $count;
         }
 
-        $weight = 1;
-        if ($count % $this->getItemAsObject($item)->getBaseItem()->getBundleSize() === 0) {
-            $weight = 0;
+        $weight = (int)($count/$this->getItemAsObject($item)->getBaseItem()->getBundleSize());
+        if ($count % $this->getItemAsObject($item)->getBaseItem()->getBundleSize() !== 0) {
+            $weight++;
         }
-
-        $weight += (int) $count/$this->getItemAsObject($item)->getBaseItem()->getBundleSize();
 
         return $weight;
     }
