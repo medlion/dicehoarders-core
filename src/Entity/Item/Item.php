@@ -107,10 +107,15 @@ abstract class Item
      *
      * @ORM\OneToMany(targetEntity=ItemOverride::class, mappedBy="itemId", fetch="EAGER")
      * @Serializer\Accessor(getter="getItemOverrides", setter="setItemOverrides")
-     *
-     * @Serializer\Exclude()
      */
     private $itemOverrides;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rarity", type="string")
+     */
+    private $rarity;
 
 
     /**
@@ -255,12 +260,30 @@ abstract class Item
     }
 
     /**
-     * @param ArrayCollection $itemOverrides
+     * @param ArrayCollection|null $itemOverrides
      */
-    public function setItemOverrides(ArrayCollection $itemOverrides): void
+    public function setItemOverrides($itemOverrides): void
     {
         $this->itemOverrides = $itemOverrides;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getRarity()
+    {
+        return $this->rarity;
+    }
+
+    /**
+     * @param string $rarity
+     */
+    public function setRarity(string $rarity): void
+    {
+        $this->rarity = $rarity;
+    }
+
+
 
     /**
      * @return bool
@@ -279,17 +302,21 @@ abstract class Item
      */
     public function applyItemOverrides ()
     {
-        foreach ($this->getItemOverrides() as $itemOverride) {
-            try {
-                $key = Tools::snakeCaseToCamelCase($itemOverride->getOverrideKey(), false);
-                $class = new ReflectionClass($this->getBaseItem());
-                $property = $class->getProperty($key);
-                $property->setAccessible(true);
-                $property->setValue($this->getBaseItem(), $itemOverride->getValue());
-            } catch (\Exception $exception) {
-                continue;
+        if (is_iterable($this->getItemOverrides())) {
+            foreach ($this->getItemOverrides() as $itemOverride) {
+                try {
+                    $key = Tools::snakeCaseToCamelCase($itemOverride->getOverrideKey(), false);
+                    $class = new ReflectionClass($this->getBaseItem());
+                    $property = $class->getProperty($key);
+                    $property->setAccessible(true);
+                    $property->setValue($this->getBaseItem(), $itemOverride->getValue());
+                } catch (\Exception $exception) {
+                    continue;
+                }
             }
         }
+
+        $this->setItemOverrides(null);
 
         return $this;
     }
