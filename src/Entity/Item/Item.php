@@ -275,8 +275,6 @@ abstract class Item
     /**
      * By Bahamut, I hate the magic in this function. That being said...
      *
-     * @Serializer\PreSerialize()
-     *
      * @return $this
      */
     public function applyItemOverrides ()

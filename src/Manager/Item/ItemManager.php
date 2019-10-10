@@ -81,6 +81,8 @@ class ItemManager
     }
 
     /**
+     * Remove this function
+     *
      * @param Item $item
      * @return mixed
      * @throws \Exception
@@ -110,11 +112,11 @@ class ItemManager
         }
 
         return $itemArray;
-
-        /** TODO Hacktoberfest Remove this function */
     }
 
     /**
+     * TODO Move this functionality to the CharacterItem manager
+     *
      * @param Item $item
      * @return Item
      */
@@ -135,7 +137,7 @@ class ItemManager
         }
 
         $weight = (int)($count/$this->getItemAsObject($item)->getBaseItem()->getBundleSize());
-        if ($count % $this->getItemAsObject($item)->getBaseItem()->getBundleSize() !== 0) {
+        if ($count % $item->applyItemOverrides()->getBaseItem()->getBundleSize() !== 0) {
             $weight++;
         }
 
