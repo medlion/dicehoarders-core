@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="ability")
+ * @ORM\Entity()
  *
  * TODO Add discriminator for ability types
  */
@@ -29,21 +30,6 @@ class Ability
      * @ORM\Column(name="name", type="string")
      */
     private $name;
-
-    /**
-     * @var int;
-     *
-     * @ORM\Column(name="attunement_level_required", type="integer")
-     */
-    private $attunementLevelRequired;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="attune_by", type="json")
-     * @var string[]
-     */
-    private $attuneBy = [];
 
     /**
      * @var int
@@ -104,38 +90,6 @@ class Ability
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAttunementLevelRequired(): int
-    {
-        return $this->attunementLevelRequired;
-    }
-
-    /**
-     * @param int $attunementLevelRequired
-     */
-    public function setAttunementLevelRequired(int $attunementLevelRequired): void
-    {
-        $this->attunementLevelRequired = $attunementLevelRequired;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAttuneBy(): array
-    {
-        return $this->attuneBy;
-    }
-
-    /**
-     * @param array $attuneBy
-     */
-    public function setAttuneBy(array $attuneBy): void
-    {
-        $this->attuneBy = $attuneBy;
     }
 
     /**

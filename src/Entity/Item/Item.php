@@ -102,15 +102,6 @@ abstract class Item
      */
     private $weightPounds;
 
-
-    /**
-     * @var ItemOverride[]
-     *
-     * @ORM\OneToMany(targetEntity=ItemOverride::class, mappedBy="itemId", fetch="EAGER")
-     * @Serializer\Accessor(getter="getItemOverrides", setter="setItemOverrides")
-     */
-    private $itemOverrides;
-
     /**
      * TODO Add some validation on this
      *
@@ -131,6 +122,20 @@ abstract class Item
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updated_at;
+
+    /**
+     * @var ItemOverride[]
+     *
+     * @ORM\OneToMany(targetEntity=ItemOverride::class, mappedBy="itemId", fetch="EAGER")
+     */
+    private $itemOverrides;
+
+    /**
+     * @var ItemAbility[]
+     *
+     * @ORM\OneToMany(targetEntity=ItemAbility::class, mappedBy="item", fetch="EAGER")
+     */
+    private $itemAbilities;
 
 
     /**
@@ -280,6 +285,22 @@ abstract class Item
     public function setItemOverrides($itemOverrides): void
     {
         $this->itemOverrides = $itemOverrides;
+    }
+
+    /**
+     * @return ItemAbility[]
+     */
+    public function getItemAbilities(): array
+    {
+        return $this->itemAbilities;
+    }
+
+    /**
+     * @param ItemAbility[] $itemAbilities
+     */
+    public function setItemAbilities(array $itemAbilities): void
+    {
+        $this->itemAbilities = $itemAbilities;
     }
 
     /**
