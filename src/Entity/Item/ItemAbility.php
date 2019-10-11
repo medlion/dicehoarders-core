@@ -24,7 +24,7 @@ class ItemAbility
 
     /**
      * @var Item
-     * @ORM\OneToOne(targetEntity=Item::class, inversedBy="itemAbilities")
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="itemAbilities")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id")
      *
      * @Serializer\Exclude()
@@ -36,6 +36,7 @@ class ItemAbility
      * @var Ability
      * @ORM\OneToOne(targetEntity=Ability::class)
      * @ORM\JoinColumn(name="ability_id", referencedColumnName="id")
+     * @Serializer\Inline()
      */
     private $ability;
 

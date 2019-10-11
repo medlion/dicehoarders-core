@@ -5,12 +5,19 @@ namespace App\Entity\Ability;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Table(name="ability")
  * @ORM\Entity()
  *
- * TODO Add discriminator for ability types
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="ability_type", type="integer")
+ * @ORM\DiscriminatorMap({
+ *             "Ability",
+ *              1 = "AbilityGeneric",
+ * })
+ * @Serializer\Discriminator(disabled=true)
  */
 class Ability
 {
@@ -21,6 +28,7 @@ class Ability
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(name="id", type="integer")
+     * @Serializer\Exclude()
      */
     private $id;
 
@@ -57,6 +65,7 @@ class Ability
     /**
      * @var DateTime
      * @ORM\Column(name="created_at", type="datetime")
+     * @Serializer\Exclude()
      */
     private $created_at;
 

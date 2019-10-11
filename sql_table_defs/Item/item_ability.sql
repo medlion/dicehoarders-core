@@ -4,5 +4,6 @@ CREATE TABLE item_ability (
     ability_id INT NOT NULL,
     attunement_level_required INT DEFAULT 0,
     attune_by JSON,
+    requires_proficiency BOOL DEFAULT false,
     PRIMARY KEY (id)
 );

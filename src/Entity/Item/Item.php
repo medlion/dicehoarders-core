@@ -33,13 +33,6 @@ use ReflectionException;
  */
 abstract class Item
 {
-    const ITEM_TYPE_MAP = [
-        'Item',
-        1 => 'Armor',
-        2 => 'Container',
-        3 => 'Ammunition'
-    ];
-
     /**
      * @var string
      * @Serializer\Expose()
@@ -386,9 +379,4 @@ abstract class Item
 
         return $this;
     }
-
-
-    /**
-     * TODO Add abilities
-     */
 }

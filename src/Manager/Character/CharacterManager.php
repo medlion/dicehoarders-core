@@ -146,6 +146,8 @@ class CharacterManager
 
             /** TODO Complete */
 
+            /** TODO Add possibly for more generic item types, e.g. All ammunition instead of just Arrows */
+
         }
 
 
