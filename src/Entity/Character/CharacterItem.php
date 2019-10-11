@@ -16,6 +16,8 @@ use JMS\Serializer\Annotation as Serializer;
 class CharacterItem
 {
     /**
+     * @var int
+     *
      * @Serializer\Exclude())
      *
      * @ORM\Column(name="id", type="integer")
@@ -55,6 +57,27 @@ class CharacterItem
      * @ORM\Column(name="count")
      */
     private $count;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="attuned_level", type="integer")
+     */
+    private $attunedLevel;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="hide_above_attuned_level", type="boolean")
+     */
+    private $hideAboveAttunedLevel;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="apply_dm_overrides", type="boolean")
+     */
+    private $applyDmOverrides;
 
     /**
      * @return mixed
@@ -139,10 +162,51 @@ class CharacterItem
         $this->count = $count;
     }
 
+    /**
+     * @return int
+     */
+    public function getAttunedLevel(): int
+    {
+        return $this->attunedLevel;
+    }
 
     /**
-     * Todo Add Attunement level and DM override
+     * @param int $attunedLevel
      */
+    public function setAttunedLevel(int $attunedLevel): void
+    {
+        $this->attunedLevel = $attunedLevel;
+    }
 
+    /**
+     * @return bool
+     */
+    public function isHideAboveAttunedLevel(): bool
+    {
+        return $this->hideAboveAttunedLevel;
+    }
 
+    /**
+     * @param bool $hideAboveAttunedLevel
+     */
+    public function setHideAboveAttunedLevel(bool $hideAboveAttunedLevel): void
+    {
+        $this->hideAboveAttunedLevel = $hideAboveAttunedLevel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApplyDmOverrides(): bool
+    {
+        return $this->applyDmOverrides;
+    }
+
+    /**
+     * @param bool $applyDmOverrides
+     */
+    public function setApplyDmOverrides(bool $applyDmOverrides): void
+    {
+        $this->applyDmOverrides = $applyDmOverrides;
+    }
 }
