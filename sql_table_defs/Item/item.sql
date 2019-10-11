@@ -6,5 +6,7 @@ CREATE TABLE `item`
     description longtext DEFAULT NULL,
     physical_description longtext DEFAULT NULL,
     rarity varchar (32) DEFAULT NULL,
-    source varchar(255) DEFAULT NULL
+    source varchar(255) DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

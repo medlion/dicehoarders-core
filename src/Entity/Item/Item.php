@@ -4,6 +4,7 @@
 namespace App\Entity\Item;
 
 use App\Helper\Tools;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -118,6 +119,18 @@ abstract class Item
      * @ORM\Column(name="rarity", type="string")
      */
     private $rarity;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updated_at;
 
 
     /**
@@ -285,7 +298,37 @@ abstract class Item
         $this->rarity = $rarity;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->created_at;
+    }
 
+    /**
+     * @param DateTime $created_at
+     */
+    public function setCreatedAt(DateTime $created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param DateTime $updated_at
+     */
+    public function setUpdatedAt(DateTime $updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
 
     /**
      * @return bool
