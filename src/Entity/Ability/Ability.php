@@ -3,6 +3,7 @@
 
 namespace App\Entity\Ability;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -66,6 +67,12 @@ class Ability
      * @ORM\Column(name="recharge_amount", type="string")
      */
     private $rechargeAmount;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $created_at;
 
     /**
      * @return int
@@ -177,5 +184,13 @@ class Ability
     public function setRechargeAmount(string $rechargeAmount): void
     {
         $this->rechargeAmount = $rechargeAmount;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->created_at;
     }
 }

@@ -8,5 +8,6 @@ CREATE TABLE ability (
     recharge_time INT,
     recharge_time_unit VARCHAR (16),
     recharge_amount VARCHAR(8) DEFAULT '1',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
