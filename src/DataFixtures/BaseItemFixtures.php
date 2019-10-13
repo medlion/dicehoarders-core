@@ -200,7 +200,7 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $plate->setClass(BaseArmor::CLASS_HEAVY_ARMOR);
         $plate->setCostCopper(150000);
         $plate->setWeightPounds(65);
-        $plate->setBaseItemName(18);
+        $plate->setBaseAC(18);
         $plate->setMaxDexBonus(0);
         $plate->setOtherBonus(0);
         $plate->setStrRequirement(15);
