@@ -39,7 +39,7 @@ class TestDataFixtures extends Fixture implements FixtureGroupInterface
      */
     public function load(ObjectManager $manager)
     {
-        $this->userManager->createUser('admin@dicehoarders', 'admin', 'password');
-        $this->userManager->createUser('user@dicehoarders', 'user', 'password');
+        $this->userManager->createUser('admin@dicehoarders.dh', 'admin', 'password');
+        $this->userManager->createUser('user@dicehoarders.dh', 'user', 'password');
     }
 }
