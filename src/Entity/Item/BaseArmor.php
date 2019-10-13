@@ -13,6 +13,10 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class BaseArmor
 {
+    const CLASS_LIGHT_ARMOR = 'Light Armor';
+    const CLASS_MEDIUM_ARMOR = 'Medium Armor';
+    const CLASS_HEAVY_ARMOR = 'Heavy Armor';
+
     /**
      * @var int
      *
@@ -118,92 +122,186 @@ class BaseArmor
     }
 
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return string
      */
-    public function getBaseItemName()
+    public function getBaseItemName(): string
     {
         return $this->baseItemName;
     }
 
     /**
+     * @param string $baseItemName
+     */
+    public function setBaseItemName(string $baseItemName): void
+    {
+        $this->baseItemName = $baseItemName;
+    }
+
+    /**
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
     /**
+     * @param string $class
+     */
+    public function setClass(string $class): void
+    {
+        $this->class = $class;
+    }
+
+    /**
      * @return int
      */
-    public function getCostCopper()
+    public function getCostCopper(): int
     {
         return $this->costCopper;
     }
 
     /**
+     * @param int $costCopper
+     */
+    public function setCostCopper(int $costCopper): void
+    {
+        $this->costCopper = $costCopper;
+    }
+
+    /**
      * @return float
      */
-    public function getWeightPounds()
+    public function getWeightPounds(): float
     {
         return $this->weightPounds;
     }
 
     /**
+     * @param float $weightPounds
+     */
+    public function setWeightPounds(float $weightPounds): void
+    {
+        $this->weightPounds = $weightPounds;
+    }
+
+    /**
      * @return int
      */
-    public function getBaseAC()
+    public function getBaseAC(): int
     {
         return $this->baseAC;
     }
 
     /**
+     * @param int $baseAC
+     */
+    public function setBaseAC(int $baseAC): void
+    {
+        $this->baseAC = $baseAC;
+    }
+
+    /**
      * @return int
      */
-    public function getMaxDexBonus()
+    public function getMaxDexBonus(): int
     {
         return $this->maxDexBonus;
     }
 
     /**
+     * @param int|null $maxDexBonus
+     */
+    public function setMaxDexBonus(int $maxDexBonus): void
+    {
+        $this->maxDexBonus = $maxDexBonus;
+    }
+
+    /**
      * @return int
      */
-    public function getOtherBonus()
+    public function getOtherBonus(): int
     {
         return $this->otherBonus;
     }
 
     /**
+     * @param int $otherBonus
+     */
+    public function setOtherBonus(int $otherBonus): void
+    {
+        $this->otherBonus = $otherBonus;
+    }
+
+    /**
      * @return int
      */
-    public function getStrRequirement()
+    public function getStrRequirement(): int
     {
         return $this->strRequirement;
     }
 
     /**
+     * @param int $strRequirement
+     */
+    public function setStrRequirement(int $strRequirement): void
+    {
+        $this->strRequirement = $strRequirement;
+    }
+
+    /**
      * @return bool
      */
-    public function isStealthDisadvantage()
+    public function isStealthDisadvantage(): bool
     {
         return $this->stealthDisadvantage;
     }
 
     /**
-     * @return int
+     * @param bool $stealthDisadvantage
      */
-    public function getDonTimeTurns()
+    public function setStealthDisadvantage(bool $stealthDisadvantage): void
     {
-        return $this->donTimeTurns;
+        $this->stealthDisadvantage = $stealthDisadvantage;
     }
 
     /**
      * @return int
      */
-    public function getDoffTimeTurns()
+    public function getDonTimeTurns(): int
+    {
+        return $this->donTimeTurns;
+    }
+
+    /**
+     * @param int $donTimeTurns
+     */
+    public function setDonTimeTurns(int $donTimeTurns): void
+    {
+        $this->donTimeTurns = $donTimeTurns;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDoffTimeTurns(): int
     {
         return $this->doffTimeTurns;
     }
 
-
+    /**
+     * @param int $doffTimeTurns
+     */
+    public function setDoffTimeTurns(int $doffTimeTurns): void
+    {
+        $this->doffTimeTurns = $doffTimeTurns;
+    }
 }
