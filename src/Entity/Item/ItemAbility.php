@@ -55,6 +55,8 @@ class ItemAbility
      */
     private $attuneBy = [];
 
+    /** TODO Hacktoberfest Add requires proficiency: */
+
     /**
      * @return int
      */
