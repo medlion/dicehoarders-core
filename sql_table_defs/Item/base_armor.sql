@@ -5,7 +5,7 @@ CREATE TABLE base_armor (
     cost_copper INT NOT NULL,
     weight_pounds FLOAT NOT NULL,
     base_ac INT NOT NULL,
-    max_dex_ac_bonus INT NOT NULL,
+    max_dex_ac_bonus INT,
     other_ac_bonus INT NOT NULL,
     min_str_requirement INT NOT NULL,
     stealth_disadvantage BOOL NOT NULL,

@@ -66,7 +66,7 @@ class BaseArmor
     protected $baseAC;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="max_dex_ac_bonus", type="integer")
      * @Serializer\Expose()
@@ -210,9 +210,9 @@ class BaseArmor
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxDexBonus(): int
+    public function getMaxDexBonus()
     {
         return $this->maxDexBonus;
     }
@@ -220,7 +220,7 @@ class BaseArmor
     /**
      * @param int|null $maxDexBonus
      */
-    public function setMaxDexBonus(int $maxDexBonus): void
+    public function setMaxDexBonus($maxDexBonus): void
     {
         $this->maxDexBonus = $maxDexBonus;
     }
