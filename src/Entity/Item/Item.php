@@ -33,6 +33,15 @@ use ReflectionException;
  */
 abstract class Item
 {
+    const SOURCE_SRD = 'SRD';
+
+    const RARITY_MUNDANE = 'Mundane';
+    const RARITY_COMMON = 'Common';
+    const RARITY_UNCOMMON = 'Uncommon';
+    const RARITY_RARE = 'Rare';
+    const RARITY_VARY_RARE = 'Very Rare';
+    const RARITY_LEGENDARY = 'Legendary';
+
     /**
      * @var string
      * @Serializer\Expose()
