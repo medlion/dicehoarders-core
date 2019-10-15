@@ -19,6 +19,8 @@ class CharacterManager
 {
     const PC_STATUS_ACTIVE = 1;
 
+    /** TODO Mark characters as inactive */
+
     /**
      * @var EntityManagerInterface
      */
