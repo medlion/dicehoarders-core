@@ -140,13 +140,11 @@ class CharacterManager
         }
 
         if (!is_null($container->getBaseItem()->getHoldSpecificBaseItem())) {
-            if ($container->getBaseItem()->getHoldSpecificBaseItem() !== $item->getBaseItem()->getBaseItemName()) {
+            if ($container->getBaseItem()->getHoldSpecificBaseItem() !== $item->getType() && $container->getBaseItem()->getHoldSpecificBaseItem() !== $item->getBaseItem()->getBaseItemName()) {
                 throw new UserFriendlyException('This holding item can only hold items of type '. $container->getBaseItem()->getHoldSpecificBaseItem());
             }
 
             /** TODO Complete */
-
-            /** TODO Add possibly for more generic item types, e.g. All ammunition instead of just Arrows */
 
         }
 
