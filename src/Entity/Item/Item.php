@@ -17,6 +17,18 @@ use ReflectionClass;
 use ReflectionException;
 
 /**
+ * TODO Change the order of items
+ *
+ * Mainly, by following the order of items in the PHB
+ * 1.1 Coinage
+ * 1.2 Trade goods
+ * 2 Armor
+ * 3.1 Weapons
+ * 3.2 Ammunition
+ * 4 Adventuring goods
+ */
+
+/**
  * @ORM\Table(name="item")
  * @Serializer\ExclusionPolicy("NONE")
  * @ORM\Entity()
@@ -27,7 +39,8 @@ use ReflectionException;
  *             "Item",
  *              1 = "Armor",
  *              2 = "Container",
- *              3 = "Ammunition"
+ *              3 = "Ammunition",
+ *              4 = "Coinage"
  * })
  * @Serializer\Discriminator(disabled=true)
  */
