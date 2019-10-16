@@ -55,7 +55,19 @@ class ItemAbility
      */
     private $attuneBy = [];
 
-    /** TODO Hacktoberfest Add requires proficiency: */
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="requires_proficiency", type="boolean")
+     */
+    private $requiresProficiency;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="always_on", type="boolean")
+     */
+    private $alwaysOn;
 
     /**
      * @return int
