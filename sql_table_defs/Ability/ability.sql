@@ -1,7 +1,6 @@
 CREATE TABLE ability (
     id int(11) NOT NULL AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL,
-    ability_type VARCHAR (16) NOT NULL,
     uses INT DEFAULT 0,
     recharge_time INT,
     recharge_time_unit VARCHAR (16),

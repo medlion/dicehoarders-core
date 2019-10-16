@@ -11,13 +11,6 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="ability")
  * @ORM\Entity()
  *
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="ability_type", type="integer")
- * @ORM\DiscriminatorMap({
- *             "Ability",
- *              1 = "AbilityGeneric",
- * })
- * @Serializer\Discriminator(disabled=true)
  */
 class Ability
 {
@@ -68,6 +61,11 @@ class Ability
      * @Serializer\Exclude()
      */
     private $created_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AbilityMap::class, mappedBy="ability")
+     */
+    private $abilityComponents;
 
     /**
      * @return int
