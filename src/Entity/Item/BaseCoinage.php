@@ -42,12 +42,12 @@ class BaseCoinage extends Countable
     /**
      * @var float
      */
-    private $weightPounds = 0.02;
+    protected $weightPounds = 0.02;
 
     /**
      * @var int
      */
-    private $bundleSize = 1;
+    protected $bundleSize = 1;
 
     /**
      * @return int
@@ -103,5 +103,21 @@ class BaseCoinage extends Countable
     public function getWeightPounds(): float
     {
         return $this->weightPounds;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBundleSize(): int
+    {
+        return $this->bundleSize;
+    }
+
+    /**
+     * @param int $bundleSize
+     */
+    public function setBundleSize(int $bundleSize): void
+    {
+        $this->bundleSize = $bundleSize;
     }
 }
