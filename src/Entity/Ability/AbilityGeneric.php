@@ -11,15 +11,16 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity()
  * @Serializer\ExclusionPolicy("NONE")
  */
-class AbilityGeneric extends Ability
+class AbilityGeneric extends AbilityMap
 {
     /**
-     * @var Ability
-     * @ORM\OneToOne(targetEntity=Ability::class, cascade={"PERSIST"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @var int
+     *
      * @ORM\GeneratedValue()
+     * @ORM\OneToOne(targetEntity=AbilityMap::class, cascade={"PERSIST"})
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
-    private $ability;
+    private $id;
 
     /**
      * @var string
@@ -29,19 +30,19 @@ class AbilityGeneric extends Ability
     private $description;
 
     /**
-     * @return Ability
+     * @return int
      */
-    public function getAbility(): Ability
+    public function getId(): int
     {
-        return $this->ability;
+        return $this->id;
     }
 
     /**
-     * @param Ability $ability
+     * @param int $id
      */
-    public function setAbility(Ability $ability): void
+    public function setId(int $id): void
     {
-        $this->ability = $ability;
+        $this->id = $id;
     }
 
     /**

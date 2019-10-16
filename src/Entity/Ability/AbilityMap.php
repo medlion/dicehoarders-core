@@ -8,16 +8,16 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Table(name="ability_map")
+ * @ORM\Entity()
  *
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="ability_component_id", type="integer")
+ * @ORM\DiscriminatorColumn(name="ability_partial_type", type="integer")
  * @ORM\DiscriminatorMap({
- *             "Ability",
  *              1 = "AbilityGeneric",
  * })
  * @Serializer\Discriminator(disabled=true)
  */
-class AbilityMap
+abstract class AbilityMap
 {
     /**
      * @var Ability
@@ -26,5 +26,15 @@ class AbilityMap
      * @ORM\JoinColumn(name="ability_id", referencedColumnName="id")
      */
     private $ability;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id")
+     * @ORM\GeneratedValue()
+     * @ORM\Id()
+     */
+    private $abilityPartialId;
 
 }

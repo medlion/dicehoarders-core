@@ -65,7 +65,7 @@ class Ability
     /**
      * @ORM\OneToMany(targetEntity=AbilityMap::class, mappedBy="ability")
      */
-    private $abilityComponents;
+    private $abilityPartial;
 
     /**
      * @return int
