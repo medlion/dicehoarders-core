@@ -5,6 +5,7 @@ namespace App\Entity\Item;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Table(name="base_coinage")
