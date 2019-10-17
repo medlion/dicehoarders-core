@@ -3,10 +3,13 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Ability\AbilityOverride;
 use App\Entity\Item\Container;
 use App\Entity\Item\Item;
+use App\Helper\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use ReflectionClass;
 
 /**
  * @ORM\Table(name="character_item")
@@ -208,5 +211,32 @@ class CharacterItem
     public function setApplyDmOverrides(bool $applyDmOverrides): void
     {
         $this->applyDmOverrides = $applyDmOverrides;
+    }
+
+    /**
+     * @return $this
+     */
+    public function applyPermanentAbilityOverrides ()
+    {
+        if (is_iterable($this->getItem()->getItemAbilities())) {
+            foreach ($this->getItem()->getItemAbilities() as $itemAbility) {
+                if ($this->attunedLevel >= $itemAbility->getAttunementLevelRequired() && in_array($itemAbility->getAbility()->getUses(), [null, 0], true)) {
+                    foreach ($itemAbility->getAbility()->getAbilityPartial() as $abilityPartial) {
+                        if ($abilityPartial instanceof AbilityOverride) {
+                            try {
+                                $key = Tools::snakeCaseToCamelCase($abilityPartial->getOverrideKey(), false);
+                                $class = new ReflectionClass($this->getItem()->getBaseItem());
+                                $property = $class->getProperty($key);
+                                $property->setAccessible(true);
+                                $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
+                            } catch (\Exception $exception) {
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $this;
     }
 }

@@ -35,6 +35,13 @@ class Ability
     /**
      * @var int
      *
+     * @ORM\Column(name="uses", type="integer")
+     */
+    private $uses;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="recharge_time", type="integer")
      */
     private $rechargeTime;
@@ -63,6 +70,8 @@ class Ability
     private $created_at;
 
     /**
+     * @var array
+     *
      * @ORM\OneToMany(targetEntity=AbilityMap::class, mappedBy="ability")
      */
     private $abilityPartial;
@@ -97,6 +106,22 @@ class Ability
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUses(): int
+    {
+        return $this->uses;
+    }
+
+    /**
+     * @param int $uses
+     */
+    public function setUses(int $uses): void
+    {
+        $this->uses = $uses;
     }
 
     /**
@@ -154,4 +179,22 @@ class Ability
     {
         return $this->created_at;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAbilityPartial()
+    {
+        return $this->abilityPartial;
+    }
+
+    /**
+     * @param mixed $abilityPartial
+     */
+    public function setAbilityPartial($abilityPartial): void
+    {
+        $this->abilityPartial = $abilityPartial;
+    }
+
+
 }
