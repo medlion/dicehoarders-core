@@ -228,6 +228,7 @@ class CharacterItem
                                 $class = new ReflectionClass($this->getItem()->getBaseItem());
                                 $property = $class->getProperty($key);
                                 $property->setAccessible(true);
+                                /** TODO Make isAppend */
                                 $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
                                 unset ($abilityPartial);
                             } catch (\Exception $exception) {

@@ -390,7 +390,11 @@ abstract class Item
                     $class = new ReflectionClass($this->getBaseItem());
                     $property = $class->getProperty($key);
                     $property->setAccessible(true);
-                    $property->setValue($this->getBaseItem(), $itemOverride->getValue());
+                    if ($itemOverride->isAppend()) {
+                        $property->setValue($this->getBaseItem(), Tools::append($property->getValue(), $itemOverride->getValue()));
+                    } else {
+                        $property->setValue($this->getBaseItem(), $itemOverride->getValue());
+                    }
                 } catch (\Exception $exception) {
                     continue;
                 }
