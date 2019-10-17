@@ -229,6 +229,7 @@ class CharacterItem
                                 $property = $class->getProperty($key);
                                 $property->setAccessible(true);
                                 $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
+                                unset ($abilityPartial);
                             } catch (\Exception $exception) {
                                 continue;
                             }
