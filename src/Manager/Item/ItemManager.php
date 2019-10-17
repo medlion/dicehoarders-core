@@ -81,7 +81,7 @@ class ItemManager
     }
 
     /**
-     * Remove this function
+     * TODO Remove this function
      *
      * @param Item $item
      * @return mixed
