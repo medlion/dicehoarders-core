@@ -14,6 +14,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\DiscriminatorColumn(name="ability_partial_type", type="integer")
  * @ORM\DiscriminatorMap({
  *              1 = "AbilityGeneric",
+ *              2 = "AbilityOverride",
  * })
  * @Serializer\Discriminator(disabled=true)
  */
