@@ -148,4 +148,38 @@ class ItemAbility
     {
         $this->attuneBy = $attuneBy;
     }
+
+    /**
+     * @return bool
+     */
+    public function isRequiresProficiency(): bool
+    {
+        return $this->requiresProficiency;
+    }
+
+    /**
+     * @param bool $requiresProficiency
+     */
+    public function setRequiresProficiency(bool $requiresProficiency): void
+    {
+        $this->requiresProficiency = $requiresProficiency;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAlwaysOn(): bool
+    {
+        return $this->alwaysOn;
+    }
+
+    /**
+     * @param bool $alwaysOn
+     */
+    public function setAlwaysOn(bool $alwaysOn): void
+    {
+        $this->alwaysOn = $alwaysOn;
+    }
+
+
 }

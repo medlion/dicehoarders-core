@@ -220,7 +220,7 @@ class CharacterItem
     {
         if (is_iterable($this->getItem()->getItemAbilities())) {
             foreach ($this->getItem()->getItemAbilities() as $itemAbility) {
-                if ($this->attunedLevel >= $itemAbility->getAttunementLevelRequired() && in_array($itemAbility->getAbility()->getUses(), [null, 0], true)) {
+                if ($itemAbility->isAlwaysOn() && $this->attunedLevel >= $itemAbility->getAttunementLevelRequired()) {
                     foreach ($itemAbility->getAbility()->getAbilityPartial() as $abilityPartial) {
                         if ($abilityPartial instanceof AbilityOverride) {
                             try {
@@ -228,8 +228,11 @@ class CharacterItem
                                 $class = new ReflectionClass($this->getItem()->getBaseItem());
                                 $property = $class->getProperty($key);
                                 $property->setAccessible(true);
-                                /** TODO Make isAppend */
-                                $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
+                                if ($abilityPartial->isAppend()) {
+                                    $property->setValue($this->getItem()->getBaseItem(), Tools::append($property->getValue(), $abilityPartial->getValue()));
+                                } else {
+                                    $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
+                                }
                                 unset ($abilityPartial);
                             } catch (\Exception $exception) {
                                 continue;
