@@ -214,10 +214,14 @@ class CharacterItem
     }
 
     /**
+     * I have accepted the cost that this pact will have on me. My search for power lead me down a path I did not think possible before, and even if I did, never would I have deemed it necessary
+     *
      * @return $this
+     * @throws \ReflectionException
      */
-    public function applyPermanentAbilityOverrides ()
+    public function applyAlwaysOnAbilityOverrides ()
     {
+        $class = new ReflectionClass($this->getItem()->getBaseItem());
         if (is_iterable($this->getItem()->getItemAbilities())) {
             foreach ($this->getItem()->getItemAbilities() as $itemAbility) {
                 if ($itemAbility->isAlwaysOn() && $this->attunedLevel >= $itemAbility->getAttunementLevelRequired()) {
@@ -225,8 +229,43 @@ class CharacterItem
                         if ($abilityPartial instanceof AbilityOverride) {
                             try {
                                 $key = Tools::snakeCaseToCamelCase($abilityPartial->getOverrideKey(), false);
-                                $class = new ReflectionClass($this->getItem()->getBaseItem());
                                 $property = $class->getProperty($key);
+                                $property->setAccessible(true);
+                                if ($abilityPartial->isAppend()) {
+                                    $property->setValue($this->getItem()->getBaseItem(), Tools::append($property->getValue(), $abilityPartial->getValue()));
+                                } else {
+                                    $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
+                                }
+                                unset ($abilityPartial);
+                            } catch (\Exception $exception) {
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Once again, I'm complaining about the black magiks I applied in this method. But hey, pretty serialization is pretty serialization, and if it costs my soul, so be it
+     *
+     * @return $this
+     * @throws \ReflectionException
+     */
+    public function applyAbilityOverrides ()
+    {
+        $class = new ReflectionClass($this->getItem()->getBaseItem());
+        $baseItem = $class->newInstance();
+        if (is_iterable($this->getItem()->getItemAbilities())) {
+            foreach ($this->getItem()->getItemAbilities() as $itemAbility) {
+                if ($this->attunedLevel >= $itemAbility->getAttunementLevelRequired()) {
+                    foreach ($itemAbility->getAbility()->getAbilityPartial() as $abilityPartial) {
+                        if ($abilityPartial instanceof AbilityOverride) {
+                            try {
+                                $key = Tools::snakeCaseToCamelCase($abilityPartial->getOverrideKey(), false);
+                                $property = $baseItem->getProperty($key);
                                 $property->setAccessible(true);
                                 if ($abilityPartial->isAppend()) {
                                     $property->setValue($this->getItem()->getBaseItem(), Tools::append($property->getValue(), $abilityPartial->getValue()));
