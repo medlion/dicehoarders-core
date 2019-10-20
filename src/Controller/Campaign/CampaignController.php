@@ -61,7 +61,7 @@ class CampaignController extends AbstractController
             throw new UserFriendlyException('This user may not create a campaign');
         }
 
-        return $campaignAPIManager->campaignResponse($campaignManager->createCampaign($content['name'], $user));
+        return $campaignAPIManager->campaignResponse($campaignManager->createCampaign($content['campaign_name'], $user));
     }
 
     /**

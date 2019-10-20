@@ -42,16 +42,18 @@ class CampaignManager
         $campaign = new Campaign();
         $campaign->setName($name);
         $campaign->setCreator($user);
+        $campaign->setAdmins([$user]);
         do {
             $code = $this->generateCampaignJoinCode();
         } while ($this->entityManager->getRepository(Campaign::class)->findBy(['joinCode' => $code]) instanceof Campaign);
-        $this->addAdminToCampaign($user);
 
         $campaign->setJoinCode($code);
         $campaign->setJoinUnlocked(true);
         $this->entityManager->persist($campaign);
         $this->entityManager->flush();
         return $campaign;
+
+        /** TODO created at and updated at values are created as null? Even if the DB has a default value */
     }
 
 
