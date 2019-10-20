@@ -13,6 +13,8 @@ class Override
          *
          *
          * This will contain an array of regex for each possible override, that the value can be checked against before adding it
+         *
          */
+        return true;
     }
 }
