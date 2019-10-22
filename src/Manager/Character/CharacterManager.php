@@ -288,6 +288,7 @@ class CharacterManager
      */
     public function applyCharacterItemViewForPlayer (CharacterItem $characterItem)
     {
+        /** TODO Think about the order that these overrides applied */
         return $characterItem->applyAlwaysOnAbilityOverrides()->getItem()->applyItemOverrides();
     }
 }
