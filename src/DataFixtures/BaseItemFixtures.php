@@ -4,7 +4,12 @@
 namespace App\DataFixtures;
 
 
+use App\Entity\Ability\Ability;
+use App\Entity\Ability\AbilityGeneric;
+use App\Entity\Ability\AbilityOverride;
 use App\Entity\Item\BaseArmor;
+use App\Entity\Item\BaseWeapon;
+use App\Entity\Item\ItemAbility;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -32,6 +37,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
     {
         foreach ($this->getBaseArmors() as $armor) {
             $manager->persist($armor);
+        }
+
+        foreach ($this->getWeaponPropertiesAsAbilities() as $weaponProperties) {
+            $manager->persist($weaponProperties);
         }
 
         $manager->flush();
@@ -210,5 +219,38 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $armors [] = $plate;
 
         return $armors;
+    }
+
+    /** TODO Ammunition should probably be loaded before weapon properties */
+
+    private function getWeaponPropertiesAsAbilities ()
+    {
+        $properties = [];
+
+        $ammunitionDescription = 'You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.'.PHP_EOL.'If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon. A sling must be loaded to deal any damage when used in this way';
+
+        $ammunitionArrows = new Ability();
+        $abilityOverridesArrows = new AbilityOverride();
+        $abilityOverridesArrows->setOverrideKey('ammunition');
+        $abilityOverridesArrows->setValue('Arrow');
+        $abilityGenericArrows = new AbilityGeneric();
+        $abilityGenericArrows->setDescription($ammunitionDescription);
+        $ammunitionArrows->setName('Ammunition - Arrows');
+        $ammunitionArrows->setSlug(BaseWeapon::PROPERTY_AMMUNITION_ARROWS);
+        $ammunitionArrows->setAbilityPartial([$abilityOverridesArrows, $abilityGenericArrows]);
+        $properties [] = $ammunitionArrows;
+
+        $ammunitionBolts = new Ability();
+        $abilityOverridesBolts = new AbilityOverride();
+        $abilityOverridesBolts->setOverrideKey('ammunition');
+        $abilityOverridesBolts->setValue('Bolt');
+        $abilityGenericBolts = new AbilityGeneric();
+        $abilityGenericBolts->setDescription($ammunitionDescription);
+        $ammunitionBolts->setName('Ammunition - Bolts');
+        $ammunitionBolts->setSlug(BaseWeapon::PROPERTY_AMMUNITION_BOLTS);
+        $ammunitionBolts->setAbilityPartial([$abilityOverridesBolts, $abilityGenericBolts]);
+        $properties [] = $abilityOverridesBolts;
+
+        return $properties;
     }
 }

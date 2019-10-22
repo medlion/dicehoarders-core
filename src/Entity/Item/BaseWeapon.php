@@ -5,14 +5,16 @@ namespace App\Entity\Item;
 
 
 use App\Entity\Ability\Ability;
-use App\Entity\Item\ItemAbility;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 class BaseWeapon
 {
     const CLASS_MARTIAL = 'Martial';
     const CLASS_SIMPLE = 'Simple';
 
+    const PROPERTY_AMMUNITION_ARROWS = 'ammunition_arrow';
+    const PROPERTY_AMMUNITION_BOLTS = 'ammunition_bolt';
 
     /**
      * @var int
@@ -82,27 +84,36 @@ class BaseWeapon
     protected $ranged;
 
     /**
-     * @var ItemAbility[]
+     * @var Ability[]
      *
      * @ORM\Column(name="properties", type="json")
-     * @ORM\OneToOne(targetEntity=ItemAbility::class)
+     * @ORM\OneToOne(targetEntity=Ability::class)
      */
     protected $properties = [];
 
     /**
      * @var int
+     * @Serializer\Type("integer")
      */
     protected $rangeNormal;
 
     /**
      * @var int
+     * @Serializer\Type("integer")
      */
     protected $rangeDisadvantage;
 
     /**
      * @var string
+     * @Serializer\Type("string")
      */
     protected $ammunition;
+
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    protected $handsRequired = 1;
 
     /**
      * @return int
@@ -249,7 +260,7 @@ class BaseWeapon
     }
 
     /**
-     * @return ItemAbility[]
+     * @return Ability[]
      */
     public function getProperties()
     {
@@ -257,7 +268,7 @@ class BaseWeapon
     }
 
     /**
-     * @param ItemAbility[]|null $properties
+     * @param Ability[]|null $properties
      */
     public function setProperties(array $properties): void
     {
