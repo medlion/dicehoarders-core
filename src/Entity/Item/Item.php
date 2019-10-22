@@ -40,7 +40,8 @@ use ReflectionException;
  *              1 = "Armor",
  *              2 = "Container",
  *              3 = "Ammunition",
- *              4 = "Coinage"
+ *              4 = "Coinage",
+ *              5 = "Weapon"
  * })
  * @Serializer\Discriminator(disabled=true)
  */
