@@ -5,6 +5,7 @@ namespace App\Entity\Item;
 
 
 use App\Entity\Ability\Ability;
+use App\Entity\Item\ItemAbility;
 use Doctrine\ORM\Mapping as ORM;
 
 class BaseWeapon
@@ -81,10 +82,10 @@ class BaseWeapon
     protected $ranged;
 
     /**
-     * @var Ability[]
+     * @var ItemAbility[]
      *
      * @ORM\Column(name="properties", type="json")
-     * @ORM\OneToOne(targetEntity=Ability::class)
+     * @ORM\OneToOne(targetEntity=ItemAbility::class)
      */
     protected $properties = [];
 
@@ -248,7 +249,7 @@ class BaseWeapon
     }
 
     /**
-     * @return Ability[]|null
+     * @return ItemAbility[]
      */
     public function getProperties()
     {
@@ -256,7 +257,7 @@ class BaseWeapon
     }
 
     /**
-     * @param Ability[]|null $properties
+     * @param ItemAbility[]|null $properties
      */
     public function setProperties(array $properties): void
     {
