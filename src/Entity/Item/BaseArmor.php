@@ -63,7 +63,7 @@ class BaseArmor
      * @ORM\Column(name="base_ac", type="integer")
      * @Serializer\Expose()
      */
-    protected $baseAC;
+    protected $baseAc;
 
     /**
      * @var int|null
@@ -196,17 +196,17 @@ class BaseArmor
     /**
      * @return int
      */
-    public function getBaseAC(): int
+    public function getBaseAc(): int
     {
-        return $this->baseAC;
+        return $this->baseAc;
     }
 
     /**
-     * @param int $baseAC
+     * @param int $baseAc
      */
-    public function setBaseAC(int $baseAC): void
+    public function setBaseAc(int $baseAc): void
     {
-        $this->baseAC = $baseAC;
+        $this->baseAc = $baseAc;
     }
 
     /**

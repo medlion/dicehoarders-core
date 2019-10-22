@@ -201,7 +201,7 @@ class CharacterManager
         foreach ($characterItems as $characterItem) {
             $items [] = $characterItem->getItem();
         }
-        return $items;
+        return $characterItems;
     }
 
     /**
@@ -279,5 +279,15 @@ class CharacterManager
         }
 
         return $count;
+    }
+
+    /**
+     * @param CharacterItem $characterItem
+     * @return Item
+     * @throws \ReflectionException
+     */
+    public function applyCharacterItemViewForPlayer (CharacterItem $characterItem)
+    {
+        return $characterItem->applyAlwaysOnAbilityOverrides()->getItem()->applyItemOverrides();
     }
 }

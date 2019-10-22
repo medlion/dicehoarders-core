@@ -148,6 +148,7 @@ class CharacterController extends AbstractController
      * @param CharacterAPIManager $characterAPIManager
      * @param Request $request
      * @return JsonResponse
+     * @throws \ReflectionException
      */
     public function getAllCharacterItems (CharacterManager $characterManager, CharacterAPIManager $characterAPIManager, Request $request)
     {
@@ -158,7 +159,11 @@ class CharacterController extends AbstractController
             $this->denyAccessUnlessGranted(CampaignVoter::CAMPAIGN_DM, $character->getCampaign());
         }
 
-        return $characterAPIManager->jsonSerialize($characterManager->getAllCharacterItems($character));
+        $itemList = [];
+        foreach ($characterManager->getAllCharacterItems($character) as $characterItem) {
+            $itemList [] = $characterManager->applyCharacterItemViewForPlayer($characterItem);
+        }
+        return $characterAPIManager->jsonSerialize($itemList);
 
     }
 

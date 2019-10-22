@@ -307,7 +307,7 @@ abstract class Item
      */
     public function getItemAbilities(): array
     {
-        return $this->itemAbilities;
+        return $this->itemAbilities->toArray();
     }
 
     /**
@@ -391,7 +391,7 @@ abstract class Item
                     $property = $class->getProperty($key);
                     $property->setAccessible(true);
                     if ($itemOverride->isAppend()) {
-                        $property->setValue($this->getBaseItem(), Tools::append($property->getValue(), $itemOverride->getValue()));
+                        $property->setValue($this->getBaseItem(), Tools::append($property->getValue($this->getBaseItem()), $itemOverride->getValue()));
                     } else {
                         $property->setValue($this->getBaseItem(), $itemOverride->getValue());
                     }

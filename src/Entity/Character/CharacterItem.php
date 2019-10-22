@@ -219,7 +219,7 @@ class CharacterItem
      * @return $this
      * @throws \ReflectionException
      */
-    public function applyAlwaysOnAbilityOverrides ()
+    public function applyAlwaysOnAbilityOverrides (): self
     {
         $class = new ReflectionClass($this->getItem()->getBaseItem());
         if (is_iterable($this->getItem()->getItemAbilities())) {
@@ -232,11 +232,11 @@ class CharacterItem
                                 $property = $class->getProperty($key);
                                 $property->setAccessible(true);
                                 if ($abilityPartial->isAppend()) {
-                                    $property->setValue($this->getItem()->getBaseItem(), Tools::append($property->getValue(), $abilityPartial->getValue()));
+                                    $property->setValue($this->getItem()->getBaseItem(), Tools::append($property->getValue($this->getItem()->getBaseItem()), $abilityPartial->getValue()));
                                 } else {
                                     $property->setValue($this->getItem()->getBaseItem(), $abilityPartial->getValue());
                                 }
-                                unset ($abilityPartial);
+                                /** TODO Unset the ability partial */
                             } catch (\Exception $exception) {
                                 continue;
                             }
