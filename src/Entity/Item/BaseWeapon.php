@@ -89,6 +89,21 @@ class BaseWeapon
     protected $properties = [];
 
     /**
+     * @var int
+     */
+    protected $rangeNormal;
+
+    /**
+     * @var int
+     */
+    protected $rangeDisadvantage;
+
+    /**
+     * @var string
+     */
+    protected $ammunition;
+
+    /**
      * @return int
      */
     public function getId(): int
