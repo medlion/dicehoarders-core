@@ -33,13 +33,6 @@ class Ability
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string")
-     */
-    private $slug;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="uses", type="integer")
@@ -113,22 +106,6 @@ class Ability
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
     }
 
 
