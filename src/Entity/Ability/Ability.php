@@ -79,7 +79,7 @@ class Ability
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity=AbilityMap::class, mappedBy="ability")
+     * @ORM\OneToMany(targetEntity=AbilityMap::class, mappedBy="ability", cascade={"persist"})
      */
     private $abilityPartial;
 

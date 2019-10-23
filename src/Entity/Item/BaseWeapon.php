@@ -13,6 +13,7 @@ class BaseWeapon
     const CLASS_MARTIAL = 'Martial';
     const CLASS_SIMPLE = 'Simple';
 
+    /** TODO I changed my mind. Not using slugs */
     const PROPERTY_AMMUNITION_ARROWS = 'ammunition_arrow';
     const PROPERTY_AMMUNITION_BOLTS = 'ammunition_bolt';
 

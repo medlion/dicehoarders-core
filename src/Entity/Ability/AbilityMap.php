@@ -23,8 +23,9 @@ abstract class AbilityMap
     /**
      * @var Ability
      *
-     * @ORM\ManyToOne(targetEntity=Ability::class, inversedBy="abilityComponents")
+     * @ORM\ManyToOne(targetEntity=Ability::class, inversedBy="abilityComponents", cascade={"persist"})
      * @ORM\JoinColumn(name="ability_id", referencedColumnName="id")
+     * @ORM\GeneratedValue()
      */
     private $ability;
 
@@ -37,5 +38,39 @@ abstract class AbilityMap
      * @ORM\Id()
      */
     private $abilityPartialId;
+
+    /**
+     * @return Ability
+     */
+    public function getAbility(): Ability
+    {
+        return $this->ability;
+    }
+
+    /**
+     * @param Ability $ability
+     */
+    public function setAbility(Ability $ability): void
+    {
+        $this->ability = $ability;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAbilityPartialId(): int
+    {
+        return $this->abilityPartialId;
+    }
+
+    /**
+     * @param int $abilityPartialId
+     */
+    public function setAbilityPartialId(int $abilityPartialId): void
+    {
+        $this->abilityPartialId = $abilityPartialId;
+    }
+
+
 
 }
