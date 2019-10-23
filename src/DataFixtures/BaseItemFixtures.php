@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\Ability\Ability;
 use App\Entity\Ability\AbilityGeneric;
 use App\Entity\Ability\AbilityOverride;
+use App\Entity\Item\BaseAmmunition;
 use App\Entity\Item\BaseArmor;
 use App\Entity\Item\BaseWeapon;
 use App\Entity\Item\ItemAbility;
@@ -37,6 +38,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
     {
         foreach ($this->getBaseArmors() as $armor) {
             $manager->persist($armor);
+        }
+
+        foreach ($this->getBaseAmmunitions() as $ammunition) {
+            $manager->persist($ammunition);
         }
 
         foreach ($this->getWeaponPropertiesAsAbilities() as $weaponProperties) {
@@ -227,7 +232,28 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         return $armors;
     }
 
-    /** TODO Ammunition should probably be loaded before weapon properties */
+    private function getBaseAmmunitions ()
+    {
+        $ammunitions = [];
+
+        $arrow = new BaseAmmunition();
+        $arrow->setBaseItemName('Arrow');
+        $arrow->setWeightPounds(1);
+        $arrow->setCostCopper(100);
+        $arrow->setBundleSize(20);
+        $ammunitions [] = $arrow;
+
+        $needle = new BaseAmmunition();
+        $needle->setBaseItemName('Blowgun Needle');
+        $needle->setWeightPounds(1);
+        $needle->setCostCopper(100);
+        $needle->setBundleSize(50);
+        $ammunitions [] = $needle;
+
+
+
+        return $ammunitions;
+    }
 
     private function getWeaponPropertiesAsAbilities ()
     {
@@ -245,6 +271,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $ammunitionNeedles->setName('Ammunition - Needles');
         $properties [] = $ammunitionNeedles;
 
+        $ammunitionBullets = new Ability();
+        $ammunitionBullets->setName('Ammunition - Bullets');
+        $properties [] = $ammunitionBullets;
+
         return $properties;
     }
 
@@ -259,6 +289,44 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $ammunitionGenericArrow->setAbility($abilityAmmunitionArrows);
         $ammunitionGenericArrow->setDescription($ammunitionDescription);
         $propertyPart [] = $ammunitionGenericArrow;
+        $abilityOverrideArrow = new AbilityOverride();
+        $abilityOverrideArrow->setAbility($abilityAmmunitionArrows);
+        $abilityOverrideArrow->setOverrideKey('ammunition');
+        $abilityOverrideArrow->setValue('Arrow');
+        $propertyPart [] = $abilityOverrideArrow;
+
+        $abilityAmmunitionNeedles = $abilityRepository->findOneBy(['name' => 'Ammunition - Needles']);
+        $ammunitionGenericNeedle = new AbilityGeneric();
+        $ammunitionGenericNeedle->setAbility($abilityAmmunitionNeedles);
+        $ammunitionGenericNeedle->setDescription($ammunitionDescription);
+        $propertyPart [] = $ammunitionGenericNeedle;
+        $abilityOverrideNeedle = new AbilityOverride();
+        $abilityOverrideNeedle->setAbility($abilityAmmunitionNeedles);
+        $abilityOverrideNeedle->setOverrideKey('ammunition');
+        $abilityOverrideNeedle->setValue('Blowgun Needle');
+        $propertyPart [] = $abilityOverrideNeedle;
+
+        $abilityAmmunitionBolts = $abilityRepository->findOneBy(['name' => 'Ammunition - Bolts']);
+        $ammunitionGenericBolt = new AbilityGeneric();
+        $ammunitionGenericBolt->setAbility($abilityAmmunitionBolts);
+        $ammunitionGenericBolt->setDescription($ammunitionDescription);
+        $propertyPart [] = $ammunitionGenericBolt;
+        $abilityOverrideBolt = new AbilityOverride();
+        $abilityOverrideBolt->setAbility($abilityAmmunitionBolts);
+        $abilityOverrideBolt->setOverrideKey('ammunition');
+        $abilityOverrideBolt->setValue('Crossbow Bolt');
+        $propertyPart [] = $abilityOverrideBolt;
+
+        $abilityAmmunitionBullets = $abilityRepository->findOneBy(['name' => 'Ammunition - Bullets']);
+        $ammunitionGenericBullet = new AbilityGeneric();
+        $ammunitionGenericBullet->setAbility($abilityAmmunitionBullets);
+        $ammunitionGenericBullet->setDescription($ammunitionDescription);
+        $propertyPart [] = $ammunitionGenericBullet;
+        $abilityOverrideBullet = new AbilityOverride();
+        $abilityOverrideBullet->setAbility($abilityAmmunitionBullets);
+        $abilityOverrideBullet->setOverrideKey('ammunition');
+        $abilityOverrideBullet->setValue('Sling Bullet');
+        $propertyPart [] = $abilityOverrideBullet;
 
         return $propertyPart;
     }
