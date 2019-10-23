@@ -44,6 +44,12 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         }
 
         $manager->flush();
+
+        foreach ($this->getWeaponPropertyAbilityPartials($manager->getRepository(Ability::class)) as $abilityPartial) {
+            $manager->persist($abilityPartial);
+        }
+
+        $manager->flush();
     }
 
     private function getBaseArmors ()
@@ -227,8 +233,6 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
     {
         $properties = [];
 
-        $ammunitionDescription = 'You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.'.PHP_EOL.'If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon. A sling must be loaded to deal any damage when used in this way';
-
         $ammunitionArrows = new Ability();
         $ammunitionArrows->setName('Ammunition - Arrows');
         $properties [] = $ammunitionArrows;
@@ -242,5 +246,20 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $properties [] = $ammunitionNeedles;
 
         return $properties;
+    }
+
+    private function getWeaponPropertyAbilityPartials ($abilityRepository)
+    {
+        $propertyPart = [];
+
+        $ammunitionDescription = 'You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.'.PHP_EOL.'If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon. A sling must be loaded to deal any damage when used in this way';
+
+        $abilityAmmunitionArrows = $abilityRepository->findOneBy(['name' => 'Ammunition - Arrows']);
+        $ammunitionGenericArrow = new AbilityGeneric();
+        $ammunitionGenericArrow->setAbility($abilityAmmunitionArrows);
+        $ammunitionGenericArrow->setDescription($ammunitionDescription);
+        $propertyPart [] = $ammunitionGenericArrow;
+
+        return $propertyPart;
     }
 }

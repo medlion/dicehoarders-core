@@ -19,6 +19,7 @@ class AbilityGeneric extends AbilityMap
      * @ORM\GeneratedValue()
      * @ORM\OneToOne(targetEntity=AbilityMap::class, cascade={"PERSIST"})
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @ORM\Id()
      */
     private $id;
 

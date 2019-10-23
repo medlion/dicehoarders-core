@@ -37,7 +37,7 @@ abstract class AbilityMap
      * @ORM\GeneratedValue()
      * @ORM\Id()
      */
-    private $abilityPartialId;
+    private $id;
 
     /**
      * @return Ability
@@ -58,18 +58,20 @@ abstract class AbilityMap
     /**
      * @return int
      */
-    public function getAbilityPartialId(): int
+    public function getId(): int
     {
-        return $this->abilityPartialId;
+        return $this->id;
     }
 
     /**
-     * @param int $abilityPartialId
+     * @param int $id
      */
-    public function setAbilityPartialId(int $abilityPartialId): void
+    public function setId(int $id): void
     {
-        $this->abilityPartialId = $abilityPartialId;
+        $this->id = $id;
     }
+
+
 
 
 

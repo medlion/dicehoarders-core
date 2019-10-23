@@ -1,5 +1,5 @@
 CREATE TABLE ability_generic (
     id INT NOT NULL,
-    description VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
     PRIMARY KEY (id)
 );
