@@ -53,7 +53,7 @@ abstract class Item
     const RARITY_COMMON = 'Common';
     const RARITY_UNCOMMON = 'Uncommon';
     const RARITY_RARE = 'Rare';
-    const RARITY_VARY_RARE = 'Very Rare';
+    const RARITY_VERY_RARE = 'Very Rare';
     const RARITY_LEGENDARY = 'Legendary';
 
     const RARITY_VALUES = [
@@ -61,7 +61,7 @@ abstract class Item
         self::RARITY_COMMON,
         self::RARITY_UNCOMMON,
         self::RARITY_RARE,
-        self::RARITY_VARY_RARE,
+        self::RARITY_VERY_RARE,
         self::RARITY_LEGENDARY
     ];
 
