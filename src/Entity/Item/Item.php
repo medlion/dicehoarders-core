@@ -3,6 +3,7 @@
 
 namespace App\Entity\Item;
 
+use App\ExceptionHandling\UserFriendlyException;
 use App\Helper\Tools;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -54,6 +55,15 @@ abstract class Item
     const RARITY_RARE = 'Rare';
     const RARITY_VARY_RARE = 'Very Rare';
     const RARITY_LEGENDARY = 'Legendary';
+
+    const RARITY_VALUES = [
+        self::RARITY_MUNDANE,
+        self::RARITY_COMMON,
+        self::RARITY_UNCOMMON,
+        self::RARITY_RARE,
+        self::RARITY_VARY_RARE,
+        self::RARITY_LEGENDARY
+    ];
 
     /**
      * @var string
@@ -118,8 +128,6 @@ abstract class Item
     private $weightPounds;
 
     /**
-     * TODO Add some validation on this
-     *
      * @var string
      *
      * @ORM\Column(name="rarity", type="string")
@@ -328,9 +336,14 @@ abstract class Item
 
     /**
      * @param string $rarity
+     *
+     * @throws UserFriendlyException
      */
     public function setRarity(string $rarity): void
     {
+        if(!in_array($rarity, self::RARITY_VALUES)){
+            throw new UserFriendlyException('\''.$rarity.'\' is not a valid rarity');
+        }
         $this->rarity = $rarity;
     }
 
