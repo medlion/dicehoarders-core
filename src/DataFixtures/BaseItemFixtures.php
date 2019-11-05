@@ -321,6 +321,28 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $range150600->setName('Range - 150/600');
         $properties [] = $range150600;
 
+        $reach = new Ability();
+        $reach->setName('Reach');
+        $properties [] = $reach;
+
+        /** TODO Special abilities but ugh */
+
+        $thrown = new Ability();
+        $thrown->setName('Thrown');
+        $properties [] = $thrown;
+
+        $thoHanded = new Ability();
+        $thoHanded->setName('Two Handed');
+        $properties [] = $thoHanded;
+
+        $versatile1d8 = new Ability();
+        $versatile1d8->setName('Versatile - 1d8');
+        $properties [] = $versatile1d8;
+
+        $versatile1d10 = new Ability();
+        $versatile1d10->setName('Versatile - 1d10');
+        $properties [] = $versatile1d10;
+
         return $properties;
     }
 
@@ -333,7 +355,7 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $heavyDescription = 'Small creatures have disadvantage on attack rolls with heavy weapons. A heavy weapon’s size and bulk make it too large for a Small creature to use effectively.';
         $lightDescription = 'A light weapon is small and easy to handle, making it ideal for use when fighting with two weapons.';
         $loadingDescription = 'Because of the time required to load this weapon, you can fire only one piece of ammunition from it when you use an action, bonus action, or reaction to fire it, regardless of the number of attacks you can normally make.';
-        $rangeDescription = 'Because of the time required to load this weapon, you can fire only one piece of ammunition from it when you use an action, bonus action, or reaction to fire it, regardless of the number of attacks you can normally make.';
+        $rangeDescription = "A weapon that can be used to make a ranged attack has a range in parentheses after the ammunition or thrown property. The rangelists two numbers. The first is the weapon’s normal range in feet, and the second indicates the weapon’s long range. When attacking a target beyond normal range, you have disadvantage on the attack roll. You can't attack a target beyond the weapon's long range";
         $reachDescription = 'This weapon adds 5 feet to your reach when you attack with it, as well as when determining your reach for opportunity attacks with it.';
         $specialDescription = 'A weapon with the special property has unusual rules governing its use, explained in the weapon’s description (see “Special Weapons” later in this section).';
         $thrownDescription = 'If a weapon has the thrown property, you can throw the weapon to make a ranged attack. If the weapon is a melee weapon, you use the same ability modifier for that attack roll and damage roll that you would use for a melee attack with the weapon. For example, if you throw a handaxe, you use your Strength, but if you throw a dagger, you can use either your Strength or your Dexterity, since the dagger has the finesse property.';
@@ -413,6 +435,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $loadingGeneric;
 
         $abilityRange515 = $abilityRepository->findOneBy(['name' => 'Range - 5/15']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange515);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal515 = new AbilityOverride();
         $abilityOverrideNormal515->setAbility($abilityRange515);
         $abilityOverrideNormal515->setOverrideKey('range_normal');
@@ -425,6 +451,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $abilityOverrideDisadvantage515;
 
         $abilityRange2060 = $abilityRepository->findOneBy(['name' => 'Range - 20/60']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange2060);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal2060 = new AbilityOverride();
         $abilityOverrideNormal2060->setAbility($abilityRange2060);
         $abilityOverrideNormal2060->setOverrideKey('range_normal');
@@ -437,6 +467,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $abilityOverrideDisadvantage2060;
 
         $abilityRange25100 = $abilityRepository->findOneBy(['name' => 'Range - 25/100']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange25100);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal25100 = new AbilityOverride();
         $abilityOverrideNormal25100->setAbility($abilityRange25100);
         $abilityOverrideNormal25100->setOverrideKey('range_normal');
@@ -449,6 +483,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $abilityOverrideDisadvantage25100;
 
         $abilityRange30120 = $abilityRepository->findOneBy(['name' => 'Range - 30/120']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange30120);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal30120 = new AbilityOverride();
         $abilityOverrideNormal30120->setAbility($abilityRange30120);
         $abilityOverrideNormal30120->setOverrideKey('range_normal');
@@ -461,6 +499,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $abilityOverrideDisadvantage30120;
 
         $abilityRange80320 = $abilityRepository->findOneBy(['name' => 'Range - 80/320']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange80320);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal80320 = new AbilityOverride();
         $abilityOverrideNormal80320->setAbility($abilityRange80320);
         $abilityOverrideNormal80320->setOverrideKey('range_normal');
@@ -473,6 +515,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $abilityOverrideDisadvantage80320;
 
         $abilityRange100400 = $abilityRepository->findOneBy(['name' => 'Range - 100/400']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange100400);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal100400 = new AbilityOverride();
         $abilityOverrideNormal100400->setAbility($abilityRange100400);
         $abilityOverrideNormal100400->setOverrideKey('range_normal');
@@ -485,6 +531,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $abilityOverrideDisadvantage100400;
 
         $abilityRange150600 = $abilityRepository->findOneBy(['name' => 'Range - 150/600']);
+        $rangeGeneric = new AbilityGeneric();
+        $rangeGeneric->setAbility($abilityRange150600);
+        $rangeGeneric->setDescription($rangeDescription);
+        $propertyPart [] = $rangeGeneric;
         $abilityOverrideNormal150600 = new AbilityOverride();
         $abilityOverrideNormal150600->setAbility($abilityRange150600);
         $abilityOverrideNormal150600->setOverrideKey('range_normal');
@@ -495,6 +545,67 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $abilityOverrideDisadvantage150600->setOverrideKey('range_disadvantage');
         $abilityOverrideDisadvantage150600->setValue('600');
         $propertyPart [] = $abilityOverrideDisadvantage150600;
+
+        $abilityReach = $abilityRepository->findOneBy(['name' => 'Reach']);
+        $reachGeneric = new AbilityGeneric();
+        $reachGeneric->setAbility($abilityReach);
+        $reachGeneric->setDescription($reachDescription);
+        $propertyPart [] = $reachGeneric;
+        $abilityOverrideReach = new AbilityOverride();
+        $abilityOverrideReach->setAbility($abilityReach);
+        $abilityOverrideReach->setOverrideKey('range_normal');
+        $abilityOverrideReach->setValue(5);
+        $abilityOverrideReach->setIsAppend(true);
+        $propertyPart [] = $abilityOverrideReach;
+
+        $abilityThrown = $abilityRepository->findOneBy(['name' => 'Thrown']);
+        $thrownGeneric = new AbilityGeneric();
+        $thrownGeneric->setAbility($abilityThrown);
+        $thrownGeneric->setDescription($thrownDescription);
+        $propertyPart [] = $thrownGeneric;
+
+        $abilityTwoHanded = $abilityRepository->findOneBy(['name' => 'Two Handed']);
+        $twoHandedGeneric = new AbilityGeneric();
+        $twoHandedGeneric->setAbility($abilityTwoHanded);
+        $twoHandedGeneric->setDescription($twoHandedDescription);
+        $propertyPart [] = $twoHandedGeneric;
+        $twoHandedOverride = new AbilityOverride();
+        $twoHandedOverride->setAbility($abilityTwoHanded);
+        $twoHandedOverride->setOverrideKey('hands_required');
+        $twoHandedOverride->setValue('2');
+        $propertyPart [] = $twoHandedOverride;
+
+        $abilityVersatile8 = $abilityRepository->findOneBy(['name' => 'Versatile - 1d8']);
+        $versatile8Generic = new AbilityGeneric();
+        $versatile8Generic->setAbility($abilityVersatile8);
+        $versatile8Generic->setDescription($versatileDescription);
+        $propertyPart [] = $versatile8Generic;
+        $versatile8OverrideHands = new AbilityOverride();
+        $versatile8OverrideHands->setAbility($abilityVersatile8);
+        $versatile8OverrideHands->setOverrideKey('hands_required');
+        $versatile8OverrideHands->setValue('2');
+        $propertyPart [] = $versatile8OverrideHands;
+        $versatile8OverrideDamage = new AbilityOverride();
+        $versatile8OverrideDamage->setAbility($abilityVersatile8);
+        $versatile8OverrideDamage->setOverrideKey('damage_die_type');
+        $versatile8OverrideDamage->setValue('8');
+        $propertyPart [] = $versatile8OverrideDamage;
+
+        $abilityVersatile10 = $abilityRepository->findOneBy(['name' => 'Versatile - 1d10']);
+        $versatile10Generic = new AbilityGeneric();
+        $versatile10Generic->setAbility($abilityVersatile10);
+        $versatile10Generic->setDescription($versatileDescription);
+        $propertyPart [] = $versatile8Generic;
+        $versatile10OverrideHands = new AbilityOverride();
+        $versatile10OverrideHands->setAbility($abilityVersatile10);
+        $versatile10OverrideHands->setOverrideKey('hands_required');
+        $versatile10OverrideHands->setValue('2');
+        $propertyPart [] = $versatile8OverrideHands;
+        $versatile10OverrideDamage = new AbilityOverride();
+        $versatile10OverrideDamage->setAbility($abilityVersatile10);
+        $versatile10OverrideDamage->setOverrideKey('damage_die_type');
+        $versatile10OverrideDamage->setValue('10');
+        $propertyPart [] = $versatile8OverrideDamage;
 
         return $propertyPart;
     }
