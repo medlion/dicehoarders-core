@@ -8,14 +8,17 @@ use App\Entity\Ability\Ability;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
+/**
+ * @ORM\Table(name="base_weapon")
+ * @Serializer\ExclusionPolicy("NONE")
+ * @ORM\Entity()
+ */
 class BaseWeapon
 {
     const CLASS_MARTIAL = 'Martial';
     const CLASS_SIMPLE = 'Simple';
 
-    /** TODO I changed my mind. Not using slugs */
-    const PROPERTY_AMMUNITION_ARROWS = 'ammunition_arrow';
-    const PROPERTY_AMMUNITION_BOLTS = 'ammunition_bolt';
+    const DAMAGE_BLUDGEONING = 'Bludgeoning';
 
     /**
      * @var int

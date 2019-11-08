@@ -3,7 +3,15 @@
 
 namespace App\Entity\Item;
 
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
+
+/**
+ * @ORM\Table(name="weapon")
+ * @Serializer\ExclusionPolicy("NONE")
+ * @ORM\Entity()
+ */
 class Weapon extends Item
 {
     /**

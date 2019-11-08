@@ -14,6 +14,8 @@ use App\Entity\Item\ItemAbility;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
 
 class BaseItemFixtures extends Fixture implements FixtureGroupInterface
 {
@@ -52,6 +54,10 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
 
         foreach ($this->getWeaponPropertyAbilityPartials($manager->getRepository(Ability::class)) as $abilityPartial) {
             $manager->persist($abilityPartial);
+        }
+
+        foreach ($this->getBaseWeapons($manager->getRepository(Ability::class)) as $baseWeapon) {
+            $manager->persist($baseWeapon);
         }
 
         $manager->flush();
@@ -346,7 +352,7 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         return $properties;
     }
 
-    private function getWeaponPropertyAbilityPartials ($abilityRepository)
+    private function getWeaponPropertyAbilityPartials (ObjectRepository $abilityRepository)
     {
         $propertyPart = [];
 
@@ -595,7 +601,7 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $versatile10Generic = new AbilityGeneric();
         $versatile10Generic->setAbility($abilityVersatile10);
         $versatile10Generic->setDescription($versatileDescription);
-        $propertyPart [] = $versatile8Generic;
+        $propertyPart [] = $versatile10Generic;
         $versatile10OverrideHands = new AbilityOverride();
         $versatile10OverrideHands->setAbility($abilityVersatile10);
         $versatile10OverrideHands->setOverrideKey('hands_required');
@@ -608,5 +614,26 @@ class BaseItemFixtures extends Fixture implements FixtureGroupInterface
         $propertyPart [] = $versatile8OverrideDamage;
 
         return $propertyPart;
+    }
+
+    private function getBaseWeapons (ObjectRepository $abilityRepository)
+    {
+        $baseWeapons = [];
+
+        $club = new BaseWeapon();
+        $club->setBaseItemName('Club');
+        $club->setCostCopper(10);
+        $club->setWeightPounds(2);
+        $club->setDamageDieAmount(1);
+        $club->setDamageDieType(4);
+        $club->setDamageType(BaseWeapon::DAMAGE_BLUDGEONING);
+        $club->setClass(BaseWeapon::CLASS_SIMPLE);
+        $club->setRanged(false);
+        $club->setProperties([
+            $abilityRepository->findOneBy(['name' => 'Light'])
+        ]);
+        $baseWeapons [] = $club;
+
+        return $baseWeapons;
     }
 }
